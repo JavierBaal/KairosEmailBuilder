@@ -3,9 +3,20 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
+interface ButtonBlockProps {
+    text?: string;
+    url?: string;
+    backgroundColor?: string;
+    color?: string;
+    borderRadius?: string;
+    padding?: string;
+    align?: 'left' | 'center' | 'right';
+    width?: 'auto' | 'full';
+}
+
 interface ButtonPropertiesProps {
-    props: Record<string, any>;
-    onChange: (props: Record<string, any>) => void;
+    props: ButtonBlockProps;
+    onChange: (props: Partial<ButtonBlockProps>) => void;
 }
 
 export function ButtonProperties({ props, onChange }: ButtonPropertiesProps) {
@@ -65,7 +76,7 @@ export function ButtonProperties({ props, onChange }: ButtonPropertiesProps) {
                     <Label>Width</Label>
                     <Select
                         value={props.width || 'auto'}
-                        onValueChange={(value) => onChange({ width: value })}
+                        onValueChange={(value) => onChange({ width: value as 'auto' | 'full' })}
                     >
                         <SelectTrigger>
                             <SelectValue />
@@ -80,7 +91,7 @@ export function ButtonProperties({ props, onChange }: ButtonPropertiesProps) {
                     <Label>Alignment</Label>
                     <Select
                         value={props.align || 'center'}
-                        onValueChange={(value) => onChange({ align: value })}
+                        onValueChange={(value) => onChange({ align: value as 'left' | 'center' | 'right' })}
                     >
                         <SelectTrigger>
                             <SelectValue />

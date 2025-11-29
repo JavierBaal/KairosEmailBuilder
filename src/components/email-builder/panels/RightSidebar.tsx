@@ -6,7 +6,6 @@ import { ImageProperties } from '../properties/ImageProperties';
 import { ButtonProperties } from '../properties/ButtonProperties';
 import { DividerProperties } from '../properties/DividerProperties';
 import { SpacerProperties } from '../properties/SpacerProperties';
-import { Separator } from '@/components/ui/separator';
 
 export function RightSidebar() {
     const { template, selectedBlockId, updateBlock } = useEditorStore();
@@ -33,7 +32,7 @@ export function RightSidebar() {
         );
     }
 
-    const handleUpdate = (newProps: Record<string, any>) => {
+    const handleUpdate = (newProps: Record<string, unknown>) => {
         if (selectedBlockId) {
             updateBlock(selectedBlockId, newProps);
         }

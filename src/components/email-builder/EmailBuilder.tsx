@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { EmailBuilderProps, EmailBlock } from './types';
 import { LeftSidebar } from './panels/LeftSidebar';
 import { RightSidebar } from './panels/RightSidebar';
@@ -20,7 +20,20 @@ import { generateHtml } from '@/utils/html-generator';
 import { Button } from '@/components/ui/button';
 import { Download, Code } from 'lucide-react';
 
+/**
+ * EmailBuilder Component
+ * 
+ * @param value - El template de email actual
+ * @param onChange - Callback que se ejecuta cuando el template cambia
+ * @param onUploadImage - Callback opcional para subir imágenes (no implementado aún)
+ * @param previewMode - Si es true, oculta los paneles laterales y muestra solo el canvas
+ */
 export function EmailBuilder({ value, onChange, onUploadImage, previewMode = false }: EmailBuilderProps) {
+    // onUploadImage está reservado para futura implementación de subida de imágenes
+    // Se mantiene en la firma para compatibilidad futura
+    if (onUploadImage) {
+        // Futura implementación aquí
+    }
     const {
         template,
         setTemplate,
@@ -30,24 +43,36 @@ export function EmailBuilder({ value, onChange, onUploadImage, previewMode = fal
         draggedBlockType
     } = useEditorStore();
 
+    // Usar useRef para evitar loops infinitos
+    const previousTemplateRef = useRef<string>('');
+    const isInternalUpdateRef = useRef(false);
+
     // Sync external value with internal store
     useEffect(() => {
         if (value) {
-            setTemplate(value);
+            const valueStr = JSON.stringify(value);
+            // Solo actualizar si el valor externo realmente cambió y no fue un cambio interno
+            if (valueStr !== previousTemplateRef.current && !isInternalUpdateRef.current) {
+                setTemplate(value);
+                previousTemplateRef.current = valueStr;
+            }
+            isInternalUpdateRef.current = false;
         }
     }, [value, setTemplate]);
 
     // Sync internal store changes to external onChange
     useEffect(() => {
-        onChange(template);
+        const templateStr = JSON.stringify(template);
+        // Solo llamar onChange si el template realmente cambió
+        if (templateStr !== previousTemplateRef.current) {
+            isInternalUpdateRef.current = true;
+            previousTemplateRef.current = templateStr;
+            onChange(template);
+        }
     }, [template, onChange]);
 
     const [activeId, setActiveId] = useState<string | null>(null);
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
+    const [mounted] = useState(true); // Inicializar directamente, no hay SSR issues aquí
 
     const sensors = useSensors(
         useSensor(PointerSensor, {

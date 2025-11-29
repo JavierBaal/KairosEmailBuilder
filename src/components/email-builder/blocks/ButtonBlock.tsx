@@ -5,6 +5,16 @@ interface ButtonBlockProps {
     block: EmailBlock;
 }
 
+// Validar que una URL sea segura
+function isValidUrl(url: string): boolean {
+    try {
+        const urlObj = new URL(url, window.location.href);
+        return urlObj.protocol === 'http:' || urlObj.protocol === 'https:' || urlObj.protocol === 'mailto:';
+    } catch {
+        return false;
+    }
+}
+
 export function ButtonBlock({ block }: ButtonBlockProps) {
     const {
         text = 'Click Me',
@@ -17,10 +27,13 @@ export function ButtonBlock({ block }: ButtonBlockProps) {
         width = 'auto'
     } = block.props;
 
+    // Validar URL antes de usarla
+    const safeUrl = isValidUrl(url) ? url : '#';
+
     return (
         <div style={{ textAlign: align, padding: '10px' }}>
             <a
-                href={url}
+                href={safeUrl}
                 style={{
                     display: 'inline-block',
                     backgroundColor,

@@ -4,9 +4,18 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
+interface TextBlockProps {
+    text?: string;
+    align?: 'left' | 'center' | 'right';
+    color?: string;
+    fontSize?: string;
+    lineHeight?: string;
+    padding?: string;
+}
+
 interface TextPropertiesProps {
-    props: Record<string, any>;
-    onChange: (props: Record<string, any>) => void;
+    props: TextBlockProps;
+    onChange: (props: Partial<TextBlockProps>) => void;
 }
 
 export function TextProperties({ props, onChange }: TextPropertiesProps) {
@@ -25,7 +34,7 @@ export function TextProperties({ props, onChange }: TextPropertiesProps) {
                 <Label>Alignment</Label>
                 <Select
                     value={props.align || 'left'}
-                    onValueChange={(value) => onChange({ align: value })}
+                    onValueChange={(value) => onChange({ align: value as 'left' | 'center' | 'right' })}
                 >
                     <SelectTrigger>
                         <SelectValue />

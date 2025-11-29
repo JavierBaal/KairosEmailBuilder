@@ -1,4 +1,5 @@
-export type BlockType = 'text' | 'image' | 'button' | 'columns' | 'divider' | 'spacer' | 'social';
+// Tipos 'columns' y 'social' removidos temporalmente hasta implementación
+export type BlockType = 'text' | 'image' | 'button' | 'divider' | 'spacer';
 
 export interface EmailBlock {
   id: string;

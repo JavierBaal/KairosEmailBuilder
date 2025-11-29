@@ -2,9 +2,15 @@ import React from 'react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 
+interface DividerBlockProps {
+    color?: string;
+    height?: string;
+    padding?: string;
+}
+
 interface DividerPropertiesProps {
-    props: Record<string, any>;
-    onChange: (props: Record<string, any>) => void;
+    props: DividerBlockProps;
+    onChange: (props: Partial<DividerBlockProps>) => void;
 }
 
 export function DividerProperties({ props, onChange }: DividerPropertiesProps) {

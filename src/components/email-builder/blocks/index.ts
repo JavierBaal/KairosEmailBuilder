@@ -1,4 +1,6 @@
 // Barrel file para bloques
 export * from './TextBlock';
 export * from './ImageBlock';
-// ... otros bloques
+export * from './ButtonBlock';
+export * from './DividerBlock';
+export * from './SpacerBlock';

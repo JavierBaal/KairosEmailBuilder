@@ -27,6 +27,7 @@ export function SortableBlock({ block }: SortableBlockProps) {
     return (
         <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
             <BlockRenderer block={block} />
+            {/* Los bloques hijos se renderizan recursivamente dentro de BlockRenderer */}
         </div>
     );
 }

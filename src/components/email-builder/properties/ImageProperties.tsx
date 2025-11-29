@@ -3,9 +3,17 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
+interface ImageBlockProps {
+    src?: string;
+    alt?: string;
+    width?: string;
+    align?: 'left' | 'center' | 'right';
+    padding?: string;
+}
+
 interface ImagePropertiesProps {
-    props: Record<string, any>;
-    onChange: (props: Record<string, any>) => void;
+    props: ImageBlockProps;
+    onChange: (props: Partial<ImageBlockProps>) => void;
 }
 
 export function ImageProperties({ props, onChange }: ImagePropertiesProps) {
@@ -40,7 +48,7 @@ export function ImageProperties({ props, onChange }: ImagePropertiesProps) {
                     <Label>Alignment</Label>
                     <Select
                         value={props.align || 'center'}
-                        onValueChange={(value) => onChange({ align: value })}
+                        onValueChange={(value) => onChange({ align: value as 'left' | 'center' | 'right' })}
                     >
                         <SelectTrigger>
                             <SelectValue />

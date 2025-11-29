@@ -3,7 +3,6 @@ import { useDroppable } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { EmailTemplate } from '../types';
 import { cn } from '@/lib/utils';
-import { BlockRenderer } from './BlockRenderer';
 import { SortableBlock } from './SortableBlock';
 
 interface CanvasProps {

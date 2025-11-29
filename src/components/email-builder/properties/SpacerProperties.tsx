@@ -1,15 +1,21 @@
 import React from 'react';
 import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
 
+interface SpacerBlockProps {
+    height?: string;
+}
+
 interface SpacerPropertiesProps {
-    props: Record<string, any>;
-    onChange: (props: Record<string, any>) => void;
+    props: SpacerBlockProps;
+    onChange: (props: Partial<SpacerBlockProps>) => void;
 }
 
 export function SpacerProperties({ props, onChange }: SpacerPropertiesProps) {
-    const heightValue = parseInt((props.height || '20px').replace('px', ''), 10);
+    // Validar y parsear height de forma segura
+    const heightStr = props.height || '20px';
+    const heightMatch = heightStr.match(/^(\d+)px$/);
+    const heightValue = heightMatch ? parseInt(heightMatch[1], 10) : 20;
 
     return (
         <div className="space-y-4">

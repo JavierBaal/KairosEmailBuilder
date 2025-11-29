@@ -55,6 +55,15 @@ export function BlockRenderer({ block }: BlockRendererProps) {
 
             {/* Block Content */}
             {renderBlockContent()}
+
+            {/* Renderizar bloques hijos recursivamente si existen */}
+            {block.children && block.children.length > 0 && (
+                <div className="nested-blocks mt-2 space-y-2 pl-4 border-l-2 border-gray-200">
+                    {block.children.map(childBlock => (
+                        <BlockRenderer key={childBlock.id} block={childBlock} />
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
