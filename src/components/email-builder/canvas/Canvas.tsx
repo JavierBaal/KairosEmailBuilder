@@ -18,8 +18,8 @@ export function Canvas({ template }: CanvasProps) {
         <div
             ref={setNodeRef}
             className={cn(
-                "w-full max-w-[600px] min-h-[800px] bg-white shadow-lg rounded-sm p-4 transition-colors",
-                isOver && "bg-blue-50 ring-2 ring-blue-500 ring-inset"
+                "w-full min-h-[800px] bg-white shadow-lg rounded-sm p-4 transition-all duration-200",
+                isOver && "bg-blue-50 ring-2 ring-blue-500 ring-inset scale-[1.01]"
             )}
             style={{
                 backgroundColor: template.root.backgroundColor,

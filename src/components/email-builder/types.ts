@@ -1,5 +1,4 @@
-// Tipos 'columns' y 'social' removidos temporalmente hasta implementación
-export type BlockType = 'text' | 'image' | 'button' | 'divider' | 'spacer';
+export type BlockType = 'text' | 'image' | 'button' | 'columns' | 'divider' | 'spacer';
 
 export interface EmailBlock {
   id: string;
@@ -16,6 +15,13 @@ export interface EmailTemplate {
     fontFamily: string;
     children: EmailBlock[];
   };
+}
+
+export interface ColumnsBlockProps {
+  columnCount?: 2 | 3 | 4;
+  gap?: string;
+  padding?: string;
+  backgroundColor?: string;
 }
 
 export interface EmailBuilderProps {

@@ -7,6 +7,7 @@ import { ImageBlock } from '../blocks/ImageBlock';
 import { ButtonBlock } from '../blocks/ButtonBlock';
 import { DividerBlock } from '../blocks/DividerBlock';
 import { SpacerBlock } from '../blocks/SpacerBlock';
+import { ColumnsBlock } from '../blocks/ColumnsBlock';
 
 interface BlockRendererProps {
     block: EmailBlock;
@@ -29,6 +30,8 @@ export function BlockRenderer({ block }: BlockRendererProps) {
                 return <ImageBlock block={block} />;
             case 'button':
                 return <ButtonBlock block={block} />;
+            case 'columns':
+                return <ColumnsBlock block={block} />;
             case 'divider':
                 return <DividerBlock block={block} />;
             case 'spacer':
@@ -56,8 +59,8 @@ export function BlockRenderer({ block }: BlockRendererProps) {
             {/* Block Content */}
             {renderBlockContent()}
 
-            {/* Renderizar bloques hijos recursivamente si existen */}
-            {block.children && block.children.length > 0 && (
+            {/* Renderizar bloques hijos recursivamente si existen (excepto para columns que maneja sus propios hijos) */}
+            {block.type !== 'columns' && block.children && block.children.length > 0 && (
                 <div className="nested-blocks mt-2 space-y-2 pl-4 border-l-2 border-gray-200">
                     {block.children.map(childBlock => (
                         <BlockRenderer key={childBlock.id} block={childBlock} />

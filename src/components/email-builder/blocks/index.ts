@@ -2,5 +2,6 @@
 export * from './TextBlock';
 export * from './ImageBlock';
 export * from './ButtonBlock';
+export * from './ColumnsBlock';
 export * from './DividerBlock';
 export * from './SpacerBlock';

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useEditorStore } from '../store/editor-store';
 import { EmailBlock } from '../types';
 import { TextProperties } from '../properties/TextProperties';
@@ -6,9 +6,13 @@ import { ImageProperties } from '../properties/ImageProperties';
 import { ButtonProperties } from '../properties/ButtonProperties';
 import { DividerProperties } from '../properties/DividerProperties';
 import { SpacerProperties } from '../properties/SpacerProperties';
+import { ColumnsProperties } from '../properties/ColumnsProperties';
+import { Button } from '@/components/ui/button';
+import { Trash2 } from 'lucide-react';
 
 export function RightSidebar() {
-    const { template, selectedBlockId, updateBlock } = useEditorStore();
+    const { template, selectedBlockId, updateBlock, deleteBlock } = useEditorStore();
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
     // Helper to find block by ID (recursive)
     const findBlock = (blocks: EmailBlock[], id: string): EmailBlock | null => {
@@ -38,12 +42,50 @@ export function RightSidebar() {
         }
     };
 
+    const handleDelete = () => {
+        if (selectedBlockId) {
+            deleteBlock(selectedBlockId);
+            setShowDeleteConfirm(false);
+        }
+    };
+
     return (
         <div className="h-full flex flex-col">
             <div className="p-4 border-b">
-                <h2 className="text-sm font-semibold flex items-center gap-2">
-                    <span className="capitalize">{selectedBlock.type}</span> Properties
-                </h2>
+                <div className="flex items-center justify-between">
+                    <h2 className="text-sm font-semibold flex items-center gap-2">
+                        <span className="capitalize">{selectedBlock.type}</span> Properties
+                    </h2>
+                    {!showDeleteConfirm ? (
+                        <Button
+                            variant="destructive"
+                            size="sm"
+                            onClick={() => setShowDeleteConfirm(true)}
+                            className="h-8 w-8 p-0"
+                        >
+                            <Trash2 size={16} />
+                        </Button>
+                    ) : (
+                        <div className="flex gap-2">
+                            <Button
+                                variant="destructive"
+                                size="sm"
+                                onClick={handleDelete}
+                                className="h-8 text-xs"
+                            >
+                                Confirmar
+                            </Button>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => setShowDeleteConfirm(false)}
+                                className="h-8 text-xs"
+                            >
+                                Cancelar
+                            </Button>
+                        </div>
+                    )}
+                </div>
             </div>
 
             <div className="flex-1 overflow-y-auto p-4">
@@ -62,8 +104,11 @@ export function RightSidebar() {
                 {selectedBlock.type === 'spacer' && (
                     <SpacerProperties props={selectedBlock.props} onChange={handleUpdate} />
                 )}
+                {selectedBlock.type === 'columns' && (
+                    <ColumnsProperties props={selectedBlock.props} onChange={handleUpdate} blockId={selectedBlock.id} />
+                )}
                 {/* Fallback for other types */}
-                {!['text', 'image', 'button', 'divider', 'spacer'].includes(selectedBlock.type) && (
+                {!['text', 'image', 'button', 'divider', 'spacer', 'columns'].includes(selectedBlock.type) && (
                     <div className="text-sm text-muted-foreground">
                         No properties available for this block type yet.
                     </div>

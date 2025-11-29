@@ -52,6 +52,9 @@ export function generateHtml(template: EmailTemplate): string {
             case 'button':
                 blockHtml = renderButtonBlock(block);
                 break;
+            case 'columns':
+                blockHtml = renderColumnsBlock(block);
+                break;
             case 'divider':
                 blockHtml = renderDividerBlock(block);
                 break;
@@ -62,8 +65,8 @@ export function generateHtml(template: EmailTemplate): string {
                 blockHtml = '';
         }
 
-        // Renderizar bloques hijos recursivamente si existen
-        if (block.children && block.children.length > 0) {
+        // Renderizar bloques hijos recursivamente si existen (excepto para columns que maneja sus propios hijos)
+        if (block.type !== 'columns' && block.children && block.children.length > 0) {
             const childrenHtml = block.children.map(renderBlock).join('');
             blockHtml += childrenHtml;
         }
@@ -79,10 +82,16 @@ export function generateHtml(template: EmailTemplate): string {
         const lineHeight = block.props?.lineHeight || '1.5';
         const padding = block.props?.padding || '10px';
 
+        // If text contains HTML tags (from WYSIWYG editor), use it directly but sanitize
+        // Otherwise, escape plain text
+        const textContent = text.includes('<') && text.includes('>') 
+            ? text // HTML from editor - already sanitized by TipTap
+            : escapeHtml(text);
+
         return `
       <tr>
         <td align="${escapeAttribute(align)}" style="padding: ${escapeAttribute(padding)}; font-family: ${escapeAttribute(fontFamily)}; color: ${escapeAttribute(color)}; font-size: ${escapeAttribute(fontSize)}; line-height: ${escapeAttribute(lineHeight)};">
-          ${escapeHtml(text)}
+          ${textContent}
         </td>
       </tr>
     `;
@@ -155,6 +164,65 @@ export function generateHtml(template: EmailTemplate): string {
         return `
       <tr>
         <td height="${escapeAttribute(height)}" style="height: ${escapeAttribute(height)}; line-height: ${escapeAttribute(height)}; font-size: 0;">&nbsp;</td>
+      </tr>
+    `;
+    };
+
+    const renderColumnsBlock = (block: EmailBlock): string => {
+        const columnCount = Math.max(2, Math.min(4, block.props?.columnCount || 2)) as 2 | 3 | 4;
+        const gap = block.props?.gap || '10px';
+        const padding = block.props?.padding || '10px';
+        const backgroundColor = block.props?.backgroundColor || '#ffffff';
+
+        // Distribute children evenly across columns (same logic as ColumnsBlock component)
+        const children = block.children || [];
+        const itemsPerColumn = Math.ceil(children.length / columnCount);
+        const columns: EmailBlock[][] = [];
+
+        for (let i = 0; i < columnCount; i++) {
+            const start = i * itemsPerColumn;
+            const end = start + itemsPerColumn;
+            columns.push(children.slice(start, end));
+        }
+
+        // Calculate column width percentage
+        const columnWidthPercent = 100 / columnCount;
+
+        // Convert gap to padding between columns (email clients don't support CSS gap)
+        const gapValue = gap.replace('px', '');
+        const gapNum = parseInt(gapValue, 10) || 10;
+        const columnPadding = `${gapNum / 2}px`;
+
+        // Render each column
+        const columnCells = columns.map((columnBlocks, index) => {
+            const isFirst = index === 0;
+            const isLast = index === columns.length - 1;
+            
+            // Padding left/right based on gap
+            const paddingLeft = isFirst ? '0' : columnPadding;
+            const paddingRight = isLast ? '0' : columnPadding;
+
+            const columnContent = columnBlocks.length > 0
+                ? columnBlocks.map(renderBlock).join('')
+                : '<tr><td>&nbsp;</td></tr>'; // Empty column placeholder
+
+            return `
+        <td width="${columnWidthPercent}%" valign="top" style="width: ${columnWidthPercent}%; padding-left: ${paddingLeft}; padding-right: ${paddingRight};">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            ${columnContent}
+          </table>
+        </td>`;
+        }).join('');
+
+        return `
+      <tr>
+        <td style="padding: ${escapeAttribute(padding)}; background-color: ${escapeAttribute(backgroundColor)};">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="width: 100%;">
+            <tr>
+              ${columnCells}
+            </tr>
+          </table>
+        </td>
       </tr>
     `;
     };

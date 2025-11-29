@@ -13,6 +13,7 @@ interface EditorState {
     moveBlock: (blockId: string, overId: string) => void;
     selectBlock: (blockId: string | null) => void;
     setDraggedBlockType: (type: BlockType | null) => void;
+    deleteBlock: (blockId: string) => void;
 }
 
 const initialTemplate: EmailTemplate = {
@@ -47,15 +48,45 @@ export const useEditorStore = create<EditorState>((set) => ({
     setTemplate: (template) => set({ template }),
 
     addBlock: (block, parentId, index) => set((state) => {
-        // Validar que el ID del bloque sea único
+        // Helper to find and remove a block from the tree
+        const findAndRemove = (blocks: EmailBlock[], targetId: string, depth = 0): { found: EmailBlock | null; remaining: EmailBlock[] } => {
+            if (depth > MAX_DEPTH) {
+                return { found: null, remaining: blocks };
+            }
+            for (let i = 0; i < blocks.length; i++) {
+                if (blocks[i].id === targetId) {
+                    const found = blocks[i];
+                    const remaining = [...blocks];
+                    remaining.splice(i, 1);
+                    return { found, remaining };
+                }
+                const children = blocks[i].children;
+                if (children && children.length > 0) {
+                    const result = findAndRemove(children, targetId, depth + 1);
+                    if (result.found) {
+                        const updatedBlocks = [...blocks];
+                        updatedBlocks[i] = { ...blocks[i], children: result.remaining };
+                        return { found: result.found, remaining: updatedBlocks };
+                    }
+                }
+            }
+            return { found: null, remaining: blocks };
+        };
+
+        // If block already exists, remove it first (moving existing block)
+        let updatedRootChildren = state.template.root.children;
         if (!validateUniqueId(state.template.root.children, block.id)) {
-            console.warn(`Block ID ${block.id} already exists. Generating new ID.`);
-            block = { ...block, id: `block-${Date.now()}-${Math.random().toString(36).substr(2, 9)}` };
+            const removeResult = findAndRemove(state.template.root.children, block.id);
+            if (removeResult.found) {
+                updatedRootChildren = removeResult.remaining;
+                // Use the existing block data instead of creating new one
+                block = removeResult.found;
+            }
         }
 
         // Si no hay parentId, añadir al root
         if (!parentId) {
-            const children = [...state.template.root.children];
+            const children = [...updatedRootChildren];
             const insertIndex = index !== undefined && index >= 0 ? index : children.length;
             children.splice(insertIndex, 0, block);
             return {
@@ -97,7 +128,7 @@ export const useEditorStore = create<EditorState>((set) => ({
                 ...state.template,
                 root: {
                     ...state.template.root,
-                    children: findAndInsert(state.template.root.children)
+                    children: findAndInsert(updatedRootChildren)
                 }
             }
         };
@@ -204,4 +235,35 @@ export const useEditorStore = create<EditorState>((set) => ({
     selectBlock: (blockId) => set({ selectedBlockId: blockId }),
 
     setDraggedBlockType: (type) => set({ draggedBlockType: type }),
+
+    deleteBlock: (blockId: string) => set((state) => {
+        // Helper function to recursively find and remove a block
+        const findAndRemove = (blocks: EmailBlock[], targetId: string, depth = 0): EmailBlock[] => {
+            if (depth > MAX_DEPTH) {
+                console.warn('Maximum depth reached in deleteBlock.');
+                return blocks;
+            }
+            return blocks.filter(b => {
+                if (b.id === targetId) return false;
+                if (b.children && b.children.length > 0) {
+                    b.children = findAndRemove(b.children, targetId, depth + 1);
+                }
+                return true;
+            });
+        };
+
+        const updatedChildren = findAndRemove(state.template.root.children, blockId);
+
+        return {
+            template: {
+                ...state.template,
+                root: {
+                    ...state.template.root,
+                    children: updatedChildren
+                }
+            },
+            // Clear selection if deleted block was selected
+            selectedBlockId: state.selectedBlockId === blockId ? null : state.selectedBlockId
+        };
+    }),
 }));

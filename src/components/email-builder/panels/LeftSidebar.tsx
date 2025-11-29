@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDraggable } from '@dnd-kit/core';
 import { BlockType } from '../types';
-import { Type, Image as ImageIcon, Square, Minus, MoveVertical } from 'lucide-react';
+import { Type, Image as ImageIcon, Square, Columns, Minus, MoveVertical } from 'lucide-react';
 
 interface DraggableBlockProps {
     type: BlockType;
@@ -10,13 +10,14 @@ interface DraggableBlockProps {
 }
 
 function DraggableBlock({ type, label, icon }: DraggableBlockProps) {
-    const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
         id: `sidebar-${type}`,
         data: { type }
     });
 
     const style = transform ? {
         transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+        opacity: isDragging ? 0.5 : 1,
     } : undefined;
 
     return (
@@ -25,7 +26,11 @@ function DraggableBlock({ type, label, icon }: DraggableBlockProps) {
             style={style}
             {...listeners}
             {...attributes}
-            className="p-3 border rounded bg-card text-xs flex flex-col items-center gap-2 cursor-move hover:border-primary hover:shadow-sm transition-all"
+            className={`
+                p-3 border rounded bg-card text-xs flex flex-col items-center gap-2 
+                ${isDragging ? 'cursor-grabbing shadow-lg scale-95' : 'cursor-move hover:border-primary hover:shadow-sm'}
+                transition-all duration-200
+            `}
             role="button"
             aria-label={`Drag ${label} block`}
         >
@@ -43,7 +48,7 @@ export function LeftSidebar() {
                 <DraggableBlock type="text" label="Text" icon={<Type size={20} />} />
                 <DraggableBlock type="image" label="Image" icon={<ImageIcon size={20} aria-hidden="true" />} />
                 <DraggableBlock type="button" label="Button" icon={<Square size={20} />} />
-                {/* Columns y Social removidos temporalmente hasta implementación */}
+                <DraggableBlock type="columns" label="Columns" icon={<Columns size={20} />} />
                 <DraggableBlock type="divider" label="Divider" icon={<Minus size={20} />} />
                 <DraggableBlock type="spacer" label="Spacer" icon={<MoveVertical size={20} />} />
             </div>

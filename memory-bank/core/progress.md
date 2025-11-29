@@ -48,6 +48,19 @@
 *   ✅ **Accesibilidad:** `aria-label` añadido en componentes draggable.
 *   ✅ **Calidad Final:** 0 errores TypeScript, 0 warnings ESLint.
 
+### 30 de Noviembre de 2025 (Sesión Mejoras UI/UX - Paneles Redimensionables)
+*   ✅ **Componente ResizablePanel:** Implementado componente genérico para paneles redimensionables con handles independientes.
+*   ✅ **Estrategia de Resize:** Cambio de estrategia: sidebars redimensionables que empujan el Canvas (flex-1) en lugar de hacer el Canvas redimensionable directamente.
+*   ✅ **Handles Independientes:** Cada sidebar tiene su propio handle posicionado correctamente (derecha para izquierdo, izquierda para derecho).
+*   ✅ **Cálculo de DeltaX:** Corrección del cálculo de deltaX para handles en lado izquierdo (inversión correcta del movimiento).
+*   ✅ **Prevención de Interferencia:** `stopPropagation()` agregado para evitar conflictos con DndContext.
+*   ✅ **Área de Handle Aumentada:** Handle aumentado a 24px de ancho y posicionado a -12px para mejor captura de eventos.
+*   ✅ **Separación Física:** Separadores visuales de 8px (w-2) entre Canvas y sidebars para independencia total.
+*   ✅ **Scrollbar Independiente:** Scrollbar del Canvas completamente separado con padding-right de 16px y estilos minimalistas.
+*   ✅ **Persistencia:** Anchuras de sidebars guardadas en localStorage con claves específicas (`email-builder-left-sidebar-width`, `email-builder-right-sidebar-width`).
+*   ✅ **Z-index Optimizado:** Handle con z-index 100 para estar por encima de todos los elementos, incluyendo scrollbars.
+*   ✅ **Feedback Visual:** Handles con hover states, iconos GripVertical y transiciones suaves.
+
 ## Próximas Tareas (Backlog Inmediato)
 1.  **[P0] Implementación de Columnas:** Infraestructura lista. Solo falta crear `ColumnsBlock.tsx` y `ColumnsProperties.tsx`.
 2.  [ ] Refinamiento de estilos y UI general.

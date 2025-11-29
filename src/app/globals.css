@@ -120,3 +120,171 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* TipTap Editor Styles */
+.ProseMirror {
+  outline: none;
+}
+
+.ProseMirror p {
+  margin: 0.5em 0;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd;
+  pointer-events: none;
+  height: 0;
+}
+
+.ProseMirror h1 {
+  font-size: 2em;
+  font-weight: bold;
+  margin: 0.5em 0;
+}
+
+.ProseMirror h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 0.5em 0;
+}
+
+.ProseMirror h3 {
+  font-size: 1.25em;
+  font-weight: bold;
+  margin: 0.5em 0;
+}
+
+.ProseMirror ul,
+.ProseMirror ol {
+  padding-left: 1.5em;
+  margin: 0.5em 0;
+}
+
+.ProseMirror a {
+  color: #2563eb;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.ProseMirror strong {
+  font-weight: bold;
+}
+
+.ProseMirror em {
+  font-style: italic;
+}
+
+.ProseMirror u {
+  text-decoration: underline;
+}
+
+.ProseMirror s {
+  text-decoration: line-through;
+}
+
+/* Text Block HTML Content Styles */
+.text-block-content h1,
+.text-block-content h2,
+.text-block-content h3,
+.text-block-content h4,
+.text-block-content h5,
+.text-block-content h6 {
+  margin: 0.5em 0;
+  font-weight: bold;
+}
+
+.text-block-content h1 {
+  font-size: 2em;
+}
+
+.text-block-content h2 {
+  font-size: 1.5em;
+}
+
+.text-block-content h3 {
+  font-size: 1.25em;
+}
+
+.text-block-content p {
+  margin: 0.5em 0;
+}
+
+.text-block-content ul,
+.text-block-content ol {
+  padding-left: 1.5em;
+  margin: 0.5em 0;
+}
+
+.text-block-content a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.text-block-content strong {
+  font-weight: bold;
+}
+
+.text-block-content em {
+  font-style: italic;
+}
+
+.text-block-content u {
+  text-decoration: underline;
+}
+
+.text-block-content s {
+  text-decoration: line-through;
+}
+
+/* Canvas Scrollbar - Minimalista y fino, completamente separado de los sidebars */
+.canvas-scroll-container {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+  /* El padding-right asegura que el scrollbar esté dentro del área del Canvas */
+  padding-right: 16px;
+}
+
+.canvas-scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.canvas-scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+  /* El scrollbar está completamente dentro del área del Canvas, separado por el padding */
+  margin-right: 0;
+}
+
+.canvas-scroll-container::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.4);
+  border-radius: 3px;
+  border: none;
+  transition: background-color 0.2s;
+}
+
+.canvas-scroll-container::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(156, 163, 175, 0.6);
+}
+
+/* Scrollbar general más minimalista para toda la aplicación */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.3);
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: background-color 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(156, 163, 175, 0.5);
+}

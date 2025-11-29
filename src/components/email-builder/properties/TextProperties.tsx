@@ -1,8 +1,8 @@
 import React from 'react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { RichTextEditor } from '../editor/RichTextEditor';
 
 interface TextBlockProps {
     text?: string;
@@ -23,10 +23,10 @@ export function TextProperties({ props, onChange }: TextPropertiesProps) {
         <div className="space-y-4">
             <div className="space-y-2">
                 <Label>Content</Label>
-                <Textarea
-                    value={props.text || ''}
-                    onChange={(e) => onChange({ text: e.target.value })}
-                    rows={4}
+                <RichTextEditor
+                    content={props.text || ''}
+                    onChange={(html) => onChange({ text: html })}
+                    placeholder="Escribe tu texto aquí..."
                 />
             </div>
 

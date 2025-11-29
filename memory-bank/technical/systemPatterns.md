@@ -59,3 +59,39 @@ type EmailBlock = {
 ### Principios de Diseño
 *   **Controlled Component:** El editor no guarda el estado final, lo comunica hacia arriba.
 *   **Pluggable Blocks:** Arquitectura preparada para añadir nuevos tipos de bloques fácilmente registrándolos en un mapa de componentes.
+
+## Patrón de Paneles Redimensionables
+
+### Estrategia de Layout
+El sistema utiliza una estrategia donde **los sidebars son redimensionables** y el Canvas se ajusta automáticamente mediante `flex-1`. Esto evita problemas de tensión y aceleración que ocurrían cuando el Canvas era directamente redimensionable.
+
+### Componente ResizablePanel
+```typescript
+interface ResizablePanelProps {
+    children: React.ReactNode;
+    defaultWidth?: number;
+    minWidth?: number;
+    maxWidth?: number;
+    storageKey?: string;
+    onResize?: (width: number) => void;
+    className?: string;
+    handleSide?: 'left' | 'right'; // Lado donde está el handle
+}
+```
+
+### Características Clave
+*   **Handles Independientes:** Cada panel tiene un handle posicionado en el lado apropiado (derecha para sidebar izquierdo, izquierda para sidebar derecho).
+*   **Cálculo Correcto de DeltaX:** Cuando el handle está a la izquierda, el deltaX se invierte para que el movimiento sea intuitivo.
+*   **Prevención de Interferencia:** `stopPropagation()` previene conflictos con DndContext.
+*   **Separación Física:** Separadores visuales (8px) entre Canvas y sidebars aseguran independencia total del scrollbar.
+*   **Persistencia:** Anchuras guardadas en localStorage y restauradas al recargar.
+
+### Estructura de Layout
+```
+[Left Sidebar (ResizablePanel)] [Separador 8px] [Canvas (flex-1)] [Separador 8px] [Right Sidebar (ResizablePanel)]
+```
+
+### Archivos Clave
+*   `src/components/email-builder/ui/ResizablePanel.tsx`: Componente genérico de panel redimensionable.
+*   `src/components/email-builder/EmailBuilder.tsx`: Integración de paneles redimensionables en el layout principal.
+*   `src/app/globals.css`: Estilos del scrollbar del Canvas (`.canvas-scroll-container`).
