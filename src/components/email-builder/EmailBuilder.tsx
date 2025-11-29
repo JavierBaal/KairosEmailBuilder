@@ -20,6 +20,8 @@ import { generateHtml } from '@/utils/html-generator';
 import { Button } from '@/components/ui/button';
 import { Download, Code } from 'lucide-react';
 import { ResizablePanel } from './ui/ResizablePanel';
+import { TemplateSelector } from './templates/TemplateSelector';
+import { FileText } from 'lucide-react';
 
 /**
  * EmailBuilder Component
@@ -29,7 +31,7 @@ import { ResizablePanel } from './ui/ResizablePanel';
  * @param onUploadImage - Callback opcional para subir imágenes (no implementado aún)
  * @param previewMode - Si es true, oculta los paneles laterales y muestra solo el canvas
  */
-export function EmailBuilder({ value, onChange, onUploadImage, previewMode = false }: EmailBuilderProps) {
+export function EmailBuilder({ value, onChange, onUploadImage, previewMode = false, templateStorageCallbacks }: EmailBuilderProps) {
     // onUploadImage está reservado para futura implementación de subida de imágenes
     // Se mantiene en la firma para compatibilidad futura
     if (onUploadImage) {
@@ -78,6 +80,13 @@ export function EmailBuilder({ value, onChange, onUploadImage, previewMode = fal
     const handleRightSidebarResize = useCallback((newWidth: number) => {
         setRightSidebarWidth(newWidth);
     }, []);
+
+    const [templateSelectorOpen, setTemplateSelectorOpen] = useState(false);
+
+    const handleSelectTemplate = useCallback((selectedTemplate: typeof template) => {
+        setTemplate(selectedTemplate);
+        onChange(selectedTemplate);
+    }, [setTemplate, onChange]);
 
     // Usar useRef para evitar loops infinitos
     const previousTemplateRef = useRef<string>('');
@@ -285,6 +294,9 @@ export function EmailBuilder({ value, onChange, onUploadImage, previewMode = fal
                 <div className="h-14 border-b flex items-center justify-between px-4 bg-white z-10">
                     <h1 className="font-semibold text-lg">Kairos Email Builder</h1>
                     <div className="flex gap-2">
+                        <Button variant="outline" size="sm" onClick={() => setTemplateSelectorOpen(true)}>
+                            <FileText size={16} className="mr-2" /> Templates
+                        </Button>
                         <Button variant="outline" size="sm" onClick={handleExportJson}>
                             <Code size={16} className="mr-2" /> Export JSON
                         </Button>
@@ -354,6 +366,17 @@ export function EmailBuilder({ value, onChange, onUploadImage, previewMode = fal
                     ) : null}
                 </DragOverlay>,
                 document.body
+            )}
+
+            {/* Template Selector Modal */}
+            {!previewMode && (
+                <TemplateSelector
+                    open={templateSelectorOpen}
+                    onOpenChange={setTemplateSelectorOpen}
+                    onSelectTemplate={handleSelectTemplate}
+                    currentTemplate={template}
+                    storageCallbacks={templateStorageCallbacks}
+                />
             )}
         </DndContext>
     );

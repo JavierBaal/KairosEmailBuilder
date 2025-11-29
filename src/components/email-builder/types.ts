@@ -24,9 +24,27 @@ export interface ColumnsBlockProps {
   backgroundColor?: string;
 }
 
+export interface SavedTemplate {
+  id: string;
+  name: string;
+  description?: string;
+  category: 'predefined' | 'user';
+  thumbnail?: string; // Base64 o URL
+  template: EmailTemplate;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface TemplateStorageCallbacks {
+  onSaveTemplate?: (template: SavedTemplate) => Promise<void>;
+  onLoadTemplates?: () => Promise<SavedTemplate[]>;
+  onDeleteTemplate?: (templateId: string) => Promise<void>;
+}
+
 export interface EmailBuilderProps {
   value: EmailTemplate;
   onChange: (value: EmailTemplate) => void;
   onUploadImage?: (file: File) => Promise<string>;
   previewMode?: boolean;
+  templateStorageCallbacks?: TemplateStorageCallbacks;
 }

@@ -95,3 +95,57 @@ interface ResizablePanelProps {
 *   `src/components/email-builder/ui/ResizablePanel.tsx`: Componente genérico de panel redimensionable.
 *   `src/components/email-builder/EmailBuilder.tsx`: Integración de paneles redimensionables en el layout principal.
 *   `src/app/globals.css`: Estilos del scrollbar del Canvas (`.canvas-scroll-container`).
+
+## Sistema de Plantillas
+
+### Arquitectura
+El sistema de plantillas permite a los usuarios seleccionar plantillas predefinidas o guardar sus propios diseños como plantillas reutilizables. Soporta integración con bases de datos externas mediante callbacks opcionales.
+
+### Estructura de Datos
+```typescript
+interface SavedTemplate {
+  id: string;
+  name: string;
+  description?: string;
+  category: 'predefined' | 'user';
+  thumbnail?: string;
+  template: EmailTemplate;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+interface TemplateStorageCallbacks {
+  onSaveTemplate?: (template: SavedTemplate) => Promise<void>;
+  onLoadTemplates?: () => Promise<SavedTemplate[]>;
+  onDeleteTemplate?: (templateId: string) => Promise<void>;
+}
+```
+
+### Componentes Clave
+*   **TemplateSelector:** Modal principal con grid de plantillas, secciones predefinidas/guardadas, y acciones (nueva, guardar, eliminar).
+*   **TemplatePreview:** Renderiza vista esquemática de plantillas mostrando estructura de bloques.
+*   **SaveTemplateModal:** Modal para guardar plantillas con validación de nombre único.
+*   **template-storage.ts:** Funciones de persistencia con soporte para callbacks externos y fallback a localStorage.
+
+### Flujo de Uso
+1. Usuario hace clic en botón "Templates" en header.
+2. Se abre `TemplateSelector` modal mostrando plantillas predefinidas y guardadas.
+3. Usuario puede:
+   - Seleccionar plantilla predefinida → carga en editor.
+   - Crear nueva plantilla en blanco → limpia editor.
+   - Guardar diseño actual → abre `SaveTemplateModal`.
+   - Eliminar plantilla guardada → confirmación y eliminación.
+4. Al guardar, se valida nombre único y se persiste (callback externo o localStorage).
+
+### Persistencia
+*   **Con callbacks:** Usuario implementa su propia lógica de guardado en BD.
+*   **Sin callbacks:** Usa localStorage automáticamente como fallback.
+*   Clave localStorage: `kairos-email-builder-templates`.
+
+### Archivos Clave
+*   `src/components/email-builder/templates/predefined-templates.ts`: Definiciones de 4 plantillas predefinidas.
+*   `src/components/email-builder/templates/TemplateSelector.tsx`: Modal selector principal.
+*   `src/components/email-builder/templates/TemplatePreview.tsx`: Componente de preview esquemático.
+*   `src/components/email-builder/templates/SaveTemplateModal.tsx`: Modal para guardar plantillas.
+*   `src/components/email-builder/templates/template-storage.ts`: Lógica de persistencia.
+*   `src/components/email-builder/types.ts`: Interfaces `SavedTemplate` y `TemplateStorageCallbacks`.

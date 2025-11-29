@@ -3,7 +3,7 @@
 **Fecha:** 30 de Noviembre de 2025
 
 ## 🎯 Resumen
-El proyecto ha alcanzado un estado de **MVP Funcional Mejorado y Auditado**. El editor permite crear emails completos apilando bloques verticalmente, editando sus propiedades y exportando el resultado a HTML seguro. La base técnica es sólida y **completamente auditada**: todos los problemas críticos, de seguridad y de calidad han sido corregidos. El sistema ahora soporta bloques anidados a nivel de infraestructura, listo para implementar columnas. **UI mejorada**: Sistema de paneles redimensionables implementado con sidebars independientes que ajustan dinámicamente el Canvas.
+El proyecto ha alcanzado un estado de **MVP Funcional Mejorado y Auditado**. El editor permite crear emails completos apilando bloques verticalmente, editando sus propiedades y exportando el resultado a HTML seguro. La base técnica es sólida y **completamente auditada**: todos los problemas críticos, de seguridad y de calidad han sido corregidos. El sistema ahora soporta bloques anidados a nivel de infraestructura, listo para implementar columnas. **UI mejorada**: Sistema de paneles redimensionables implementado con sidebars independientes que ajustan dinámicamente el Canvas. **Sistema de Plantillas**: Implementado sistema completo de plantillas predefinidas y personalizadas con selector modal, preview esquemático y callbacks para integración con BD externa.
 
 ## 🚧 Tareas en Curso
 *   **Columnas (Layout):** Es la única pieza funcional mayor pendiente. La infraestructura de anidamiento ya está implementada y lista.
@@ -24,6 +24,18 @@ El proyecto ha alcanzado un estado de **MVP Funcional Mejorado y Auditado**. El 
 *   ✅ **Handles Mejorados:** Handles de resize con área aumentada (24px), z-index alto (100) y prevención de interferencia con DndContext.
 *   ✅ **Cálculo Correcto:** DeltaX invertido correctamente para handles en lado izquierdo (sidebar derecho).
 *   ✅ **Persistencia:** Anchuras de sidebars guardadas en localStorage y restauradas al recargar.
+
+### Sistema de Plantillas (30 Nov 2025)
+*   ✅ **Plantillas Predefinidas:** 4 plantillas completas implementadas (Transactional, Welcome, Newsletter, Support).
+*   ✅ **Selector Modal:** Modal con grid responsive para seleccionar plantillas predefinidas y guardadas.
+*   ✅ **Preview Esquemático:** Componente `TemplatePreview` que muestra estructura visual de plantillas.
+*   ✅ **Guardar Plantillas:** Usuario puede guardar su diseño actual como plantilla personalizada.
+*   ✅ **Gestión de Plantillas:** Cargar, guardar y eliminar plantillas guardadas.
+*   ✅ **Callbacks Externos:** Sistema de callbacks (`TemplateStorageCallbacks`) para integración con BD externa.
+*   ✅ **Fallback localStorage:** Si no hay callbacks, usa localStorage como persistencia.
+*   ✅ **Validaciones:** Validación de nombres únicos y plantillas vacías.
+*   ✅ **UI Completa:** Modales, confirmaciones y mensajes de error en inglés (Open Source ready).
+*   ✅ **Integración:** Botón "Templates" en header del EmailBuilder.
 
 ### Auditoría y Correcciones (29 Nov 2025)
 *   ✅ **Seguridad:** Vulnerabilidad XSS corregida con escape HTML completo.

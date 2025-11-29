@@ -61,6 +61,21 @@
 *   ✅ **Z-index Optimizado:** Handle con z-index 100 para estar por encima de todos los elementos, incluyendo scrollbars.
 *   ✅ **Feedback Visual:** Handles con hover states, iconos GripVertical y transiciones suaves.
 
+### 30 de Noviembre de 2025 (Sesión Sistema de Plantillas P0)
+*   ✅ **Plantillas Predefinidas:** Creadas 4 plantillas completas en `predefined-templates.ts` (Transactional, Welcome, Newsletter, Support).
+*   ✅ **TemplatePreview Component:** Componente que renderiza vista esquemática de plantillas con bloques como cajas etiquetadas.
+*   ✅ **Template Storage System:** Sistema de persistencia con funciones `saveTemplate`, `loadTemplates`, `deleteTemplate` y `templateNameExists`.
+*   ✅ **Callbacks Externos:** Interface `TemplateStorageCallbacks` para integración con BD externa (`onSaveTemplate`, `onLoadTemplates`, `onDeleteTemplate`).
+*   ✅ **Fallback localStorage:** Si no hay callbacks, usa localStorage con clave `kairos-email-builder-templates`.
+*   ✅ **TemplateSelector Modal:** Modal completo con grid responsive, secciones "Predefined Templates" y "My Templates".
+*   ✅ **SaveTemplateModal:** Modal para guardar plantillas con validación de nombre único y descripción opcional.
+*   ✅ **Integración EmailBuilder:** Botón "Templates" en header, estado del modal, y callback `handleSelectTemplate`.
+*   ✅ **Tipos TypeScript:** Interfaces `SavedTemplate` y `TemplateStorageCallbacks` agregadas a `types.ts`.
+*   ✅ **Dialog Component:** Instalado componente Dialog de shadcn/ui para modales.
+*   ✅ **Traducción Completa:** Todo el código, comentarios y UI traducidos al inglés para Open Source.
+*   ✅ **Validaciones:** Validación de nombres duplicados, plantillas vacías y manejo de errores.
+*   ✅ **UX Completa:** Botones "New Blank Template", "Save Current Template", confirmaciones de eliminación, estados de carga.
+
 ## Próximas Tareas (Backlog Inmediato)
 1.  **[P0] Implementación de Columnas:** Infraestructura lista. Solo falta crear `ColumnsBlock.tsx` y `ColumnsProperties.tsx`.
 2.  [ ] Refinamiento de estilos y UI general.
