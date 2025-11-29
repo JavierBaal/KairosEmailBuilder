@@ -324,7 +324,7 @@ export function EmailBuilder({ value, onChange, onUploadImage, previewMode = fal
                         </ResizablePanel>
                     )}
 
-                    {/* Separador visual - Espacio físico independiente del Canvas */}
+                    {/* Visual separator - Independent physical space from Canvas */}
                     {!previewMode && <div className="w-2 flex-shrink-0" />}
 
                     {/* Center Canvas - Adjusts automatically, scrollbar completely separated */}
@@ -334,7 +334,7 @@ export function EmailBuilder({ value, onChange, onUploadImage, previewMode = fal
                         </div>
                     </div>
 
-                    {/* Separador visual - Espacio físico independiente del Canvas */}
+                    {/* Visual separator - Independent physical space from Canvas */}
                     {!previewMode && <div className="w-2 flex-shrink-0" />}
 
                     {/* Right Sidebar - Properties - Redimensionable */}

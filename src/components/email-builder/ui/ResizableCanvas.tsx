@@ -10,9 +10,9 @@ interface ResizableCanvasProps {
     minWidth?: number;
     maxWidth?: number;
     storageKey?: string;
-    onResizeLeft?: (delta: number) => void; // Delta negativo cuando se arrastra hacia la derecha
-    onResizeRight?: (delta: number) => void; // Delta positivo cuando se arrastra hacia la izquierda
-    onWidthChange?: (width: number) => void; // Callback cuando cambia el ancho del Canvas
+    onResizeLeft?: (delta: number) => void; // Negative delta when dragging right
+    onResizeRight?: (delta: number) => void; // Positive delta when dragging left
+    onWidthChange?: (width: number) => void; // Callback when Canvas width changes
     className?: string;
 }
 
@@ -62,10 +62,10 @@ export function ResizableCanvas({
 
         let deltaX: number;
         if (resizeSide === 'right') {
-            // Handle derecho: arrastrar hacia la izquierda reduce el Canvas
+            // Right handle: dragging left reduces Canvas
             deltaX = e.clientX - startXRef.current;
         } else {
-            // Handle izquierdo: arrastrar hacia la derecha reduce el Canvas
+            // Left handle: dragging right reduces Canvas
             deltaX = startXRef.current - e.clientX;
         }
         
@@ -74,18 +74,18 @@ export function ResizableCanvas({
         
         setWidth(newWidth);
         
-        // Notificar el cambio de ancho del Canvas
+        // Notify Canvas width change
         if (onWidthChange && actualDelta !== 0) {
             onWidthChange(newWidth);
         }
         
-        // Notificar el cambio al componente padre para ajustar sidebars
-        // Cuando el Canvas se reduce (actualDelta negativo), el sidebar debe expandirse
-        // Por lo tanto, pasamos -actualDelta para que el sidebar crezca cuando el Canvas se reduce
+        // Notify parent component to adjust sidebars
+        // When Canvas reduces (negative actualDelta), sidebar should expand
+        // Therefore, pass -actualDelta so sidebar grows when Canvas reduces
         if (resizeSide === 'right' && onResizeRight && actualDelta !== 0) {
-            onResizeRight(-actualDelta); // Negativo del delta para expandir sidebar cuando Canvas se reduce
+            onResizeRight(-actualDelta); // Negative delta to expand sidebar when Canvas reduces
         } else if (resizeSide === 'left' && onResizeLeft && actualDelta !== 0) {
-            onResizeLeft(-actualDelta); // Negativo del delta para expandir sidebar cuando Canvas se reduce
+            onResizeLeft(-actualDelta); // Negative delta to expand sidebar when Canvas reduces
         }
     }, [isResizing, resizeSide, minWidth, maxWidth, onResizeLeft, onResizeRight, onWidthChange]);
 
@@ -131,9 +131,9 @@ export function ResizableCanvas({
                 zIndex: 50,
                 pointerEvents: 'auto',
             }}
-            title="Arrastra para redimensionar el canvas"
+            title="Drag to resize canvas"
         >
-            {/* Línea visual central */}
+            {/* Central visual line */}
             <div 
                 className={cn(
                     'absolute top-0 left-1/2 -translate-x-1/2 w-0.5 h-full transition-colors',
@@ -142,7 +142,7 @@ export function ResizableCanvas({
                 )}
             />
             
-            {/* Icono de resize - visible solo en hover */}
+            {/* Resize icon - visible only on hover */}
             <div 
                 className={cn(
                     'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity',
@@ -175,13 +175,13 @@ export function ResizableCanvas({
                 maxWidth: `${maxWidth}px` 
             }}
         >
-            {/* Handle izquierdo */}
+            {/* Left handle */}
             <ResizeHandle side="left" />
             
-            {/* Contenido del canvas */}
+            {/* Canvas content */}
             {children}
             
-            {/* Handle derecho */}
+            {/* Right handle */}
             <ResizeHandle side="right" />
         </div>
     );
