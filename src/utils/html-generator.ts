@@ -1,7 +1,7 @@
 import { EmailTemplate, EmailBlock } from '../components/email-builder/types';
 
 /**
- * Escapa caracteres HTML para prevenir XSS
+ * Escapes HTML characters to prevent XSS
  */
 function escapeHtml(text: string | undefined | null): string {
     if (text == null) return '';
@@ -14,7 +14,7 @@ function escapeHtml(text: string | undefined | null): string {
 }
 
 /**
- * Valida y escapa atributos HTML
+ * Validates and escapes HTML attributes
  */
 function escapeAttribute(value: string | undefined | null): string {
     if (value == null) return '';
@@ -27,7 +27,7 @@ function escapeAttribute(value: string | undefined | null): string {
 function formatWidth(width: string | number | undefined | null): string {
     if (width == null) return '100%';
     const widthStr = String(width);
-    // Si es porcentaje, remover el símbolo % para el atributo width
+    // If percentage, remove % symbol for width attribute
     if (widthStr.includes('%')) {
         return widthStr.replace('%', '');
     }
@@ -112,6 +112,33 @@ export function generateHtml(template: EmailTemplate): string {
         const width = block.props?.width || '100%';
         const align = block.props?.align || 'center';
         const padding = block.props?.padding || '10px';
+
+        // Validate URL helper
+        const isValidImageUrl = (url: string): boolean => {
+            if (!url || url.trim() === '') return false;
+            try {
+                const urlObj = new URL(url, 'https://example.com');
+                return urlObj.protocol === 'http:' || urlObj.protocol === 'https:' || urlObj.protocol === 'data:';
+            } catch {
+                return false;
+            }
+        };
+
+        const hasValidSrc = src && isValidImageUrl(src);
+
+        if (!hasValidSrc) {
+            // Show placeholder when no valid image URL
+            const widthValue = width === '100%' ? '100%' : width;
+            return `
+      <tr>
+        <td align="${escapeAttribute(align)}" style="padding: ${escapeAttribute(padding)};">
+          <div style="width: ${escapeAttribute(widthValue)}; min-height: 150px; background-color: #f3f4f6; border: 2px dashed #d1d5db; border-radius: 4px; display: table-cell; vertical-align: middle; text-align: center; color: #9ca3af; font-size: 16px; font-weight: 500; font-family: Arial, sans-serif;">
+            Image
+          </div>
+        </td>
+      </tr>
+    `;
+        }
 
         return `
       <tr>
@@ -370,12 +397,33 @@ export function generateHtml(template: EmailTemplate): string {
         // Build header content
         let contentHtml = '';
 
+        // Validate image URL helper
+        const isValidImageUrl = (url: string): boolean => {
+            if (!url || url.trim() === '') return false;
+            try {
+                const urlObj = new URL(url, 'https://example.com');
+                return urlObj.protocol === 'http:' || urlObj.protocol === 'https:' || urlObj.protocol === 'data:';
+            } catch {
+                return false;
+            }
+        };
+
         // Logo
-        if (logoUrl) {
+        const hasValidLogo = logoUrl && isValidImageUrl(logoUrl);
+        if (hasValidLogo) {
             const logoHeightStyle = logoHeight === 'auto' ? 'height: auto;' : `height: ${escapeAttribute(logoHeight)};`;
             contentHtml += `
             <td align="${escapeAttribute(align)}" style="vertical-align: middle;">
               <img src="${escapeAttribute(logoUrl)}" alt="${escapeAttribute(logoAlt)}" width="${escapeAttribute(logoWidth.replace('px', ''))}" style="max-width: 100%; ${logoHeightStyle} display: block;" border="0" />
+            </td>`;
+        } else if (logoUrl || !showMenu || !menuItems || menuItems.length === 0) {
+            // Show placeholder if logo URL is invalid or if there's no menu
+            const logoWidthValue = logoWidth.replace('px', '');
+            contentHtml += `
+            <td align="${escapeAttribute(align)}" style="vertical-align: middle;">
+              <div style="width: ${escapeAttribute(logoWidthValue)}px; height: 60px; min-height: 60px; background-color: #f3f4f6; border: 2px dashed #d1d5db; border-radius: 4px; display: table-cell; vertical-align: middle; text-align: center; color: #9ca3af; font-size: 14px; font-weight: 500; font-family: Arial, sans-serif;">
+                Logo
+              </div>
             </td>`;
         }
 

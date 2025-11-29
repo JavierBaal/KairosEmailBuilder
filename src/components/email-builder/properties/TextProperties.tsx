@@ -26,7 +26,7 @@ export function TextProperties({ props, onChange }: TextPropertiesProps) {
                 <RichTextEditor
                     content={props.text || ''}
                     onChange={(html) => onChange({ text: html })}
-                    placeholder="Escribe tu texto aquí..."
+                    placeholder="Type your text here..."
                 />
             </div>
 

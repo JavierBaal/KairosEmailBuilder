@@ -242,7 +242,7 @@
 .canvas-scroll-container {
   scrollbar-width: thin;
   scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
-  /* El padding-right asegura que el scrollbar esté dentro del área del Canvas */
+  /* padding-right ensures scrollbar is within Canvas area */
   padding-right: 16px;
 }
 
@@ -252,7 +252,7 @@
 
 .canvas-scroll-container::-webkit-scrollbar-track {
   background: transparent;
-  /* El scrollbar está completamente dentro del área del Canvas, separado por el padding */
+  /* Scrollbar is completely within Canvas area, separated by padding */
   margin-right: 0;
 }
 
@@ -267,7 +267,7 @@
   background-color: rgba(156, 163, 175, 0.6);
 }
 
-/* Scrollbar general más minimalista para toda la aplicación */
+/* More minimalist general scrollbar for the entire application */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;

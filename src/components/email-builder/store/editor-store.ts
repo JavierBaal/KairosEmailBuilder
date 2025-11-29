@@ -25,10 +25,10 @@ const initialTemplate: EmailTemplate = {
     }
 };
 
-// Límite máximo de profundidad para prevenir stack overflow
+// Maximum depth limit to prevent stack overflow
 const MAX_DEPTH = 50;
 
-// Helper para validar que un ID no esté duplicado en el árbol
+// Helper to validate that an ID is not duplicated in the tree
 const validateUniqueId = (blocks: EmailBlock[], id: string, depth = 0): boolean => {
     if (depth > MAX_DEPTH) return false;
     for (const block of blocks) {
@@ -84,7 +84,7 @@ export const useEditorStore = create<EditorState>((set) => ({
             }
         }
 
-        // Si no hay parentId, añadir al root
+        // If no parentId, add to root
         if (!parentId) {
             const children = [...updatedRootChildren];
             const insertIndex = index !== undefined && index >= 0 ? index : children.length;
@@ -100,7 +100,7 @@ export const useEditorStore = create<EditorState>((set) => ({
             };
         }
 
-        // Buscar el bloque padre recursivamente con límite de profundidad
+        // Find parent block recursively with depth limit
         const findAndInsert = (blocks: EmailBlock[], depth = 0): EmailBlock[] => {
             if (depth > MAX_DEPTH) {
                 console.warn('Maximum depth reached. Block not inserted.');
@@ -108,7 +108,7 @@ export const useEditorStore = create<EditorState>((set) => ({
             }
             return blocks.map(b => {
                 if (b.id === parentId) {
-                    // Encontrado el padre, insertar aquí
+                    // Found parent, insert here
                     const children = b.children || [];
                     const insertIndex = index !== undefined && index >= 0 ? index : children.length;
                     const newChildren = [...children];
@@ -116,7 +116,7 @@ export const useEditorStore = create<EditorState>((set) => ({
                     return { ...b, children: newChildren };
                 }
                 if (b.children) {
-                    // Buscar recursivamente en hijos
+                    // Search recursively in children
                     return { ...b, children: findAndInsert(b.children, depth + 1) };
                 }
                 return b;
@@ -135,7 +135,7 @@ export const useEditorStore = create<EditorState>((set) => ({
     }),
 
     updateBlock: (blockId: string, props: Record<string, unknown>) => set((state) => {
-        // Recursive update helper con límite de profundidad
+        // Recursive update helper with depth limit
         const updateInList = (blocks: EmailBlock[], depth = 0): EmailBlock[] => {
             if (depth > MAX_DEPTH) {
                 console.warn('Maximum depth reached in updateBlock.');
@@ -164,7 +164,7 @@ export const useEditorStore = create<EditorState>((set) => ({
     }),
 
     moveBlock: (blockId, overId) => set((state) => {
-        // Función helper para encontrar y extraer un bloque del árbol con límite de profundidad
+        // Helper function to find and extract a block from the tree with depth limit
         const findAndExtract = (blocks: EmailBlock[], targetId: string, depth = 0): { found: EmailBlock | null; remaining: EmailBlock[] } => {
             if (depth > MAX_DEPTH) {
                 console.warn('Maximum depth reached in moveBlock.');
@@ -190,7 +190,7 @@ export const useEditorStore = create<EditorState>((set) => ({
             return { found: null, remaining: blocks };
         };
 
-        // Función helper para insertar un bloque en una posición específica con límite de profundidad
+        // Helper function to insert a block at a specific position with depth limit
         const insertAt = (blocks: EmailBlock[], block: EmailBlock, targetId: string, depth = 0): EmailBlock[] => {
             if (depth > MAX_DEPTH) {
                 console.warn('Maximum depth reached in insertAt.');
@@ -203,7 +203,7 @@ export const useEditorStore = create<EditorState>((set) => ({
                 return newBlocks;
             }
 
-            // Buscar recursivamente en hijos
+            // Search recursively in children
             return blocks.map(b => {
                 if (b.children) {
                     return { ...b, children: insertAt(b.children, block, targetId, depth + 1) };
@@ -212,13 +212,13 @@ export const useEditorStore = create<EditorState>((set) => ({
             });
         };
 
-        // Extraer el bloque que se está moviendo
+        // Extract the block being moved
         const extractResult = findAndExtract(state.template.root.children, blockId);
         if (!extractResult.found) {
             return state; // Bloque no encontrado
         }
 
-        // Insertar el bloque en la nueva posición
+        // Insert the block at the new position
         const updatedChildren = insertAt(extractResult.remaining, extractResult.found, overId);
 
         return {

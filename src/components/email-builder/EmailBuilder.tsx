@@ -28,14 +28,14 @@ import { FileText } from 'lucide-react';
  * 
  * @param value - El template de email actual
  * @param onChange - Callback que se ejecuta cuando el template cambia
- * @param onUploadImage - Callback opcional para subir imágenes (no implementado aún)
+ * @param onUploadImage - Optional callback for uploading images (not implemented yet)
  * @param previewMode - Si es true, oculta los paneles laterales y muestra solo el canvas
  */
 export function EmailBuilder({ value, onChange, onUploadImage, previewMode = false, templateStorageCallbacks }: EmailBuilderProps) {
-    // onUploadImage está reservado para futura implementación de subida de imágenes
-    // Se mantiene en la firma para compatibilidad futura
+    // onUploadImage is reserved for future image upload implementation
+    // Kept in signature for future compatibility
     if (onUploadImage) {
-        // Futura implementación aquí
+        // Future implementation here
     }
     const {
         template,
@@ -88,7 +88,7 @@ export function EmailBuilder({ value, onChange, onUploadImage, previewMode = fal
         onChange(selectedTemplate);
     }, [setTemplate, onChange]);
 
-    // Usar useRef para evitar loops infinitos
+    // Use useRef to avoid infinite loops
     const previousTemplateRef = useRef<string>('');
     const isInternalUpdateRef = useRef(false);
 
@@ -96,7 +96,7 @@ export function EmailBuilder({ value, onChange, onUploadImage, previewMode = fal
     useEffect(() => {
         if (value) {
             const valueStr = JSON.stringify(value);
-            // Solo actualizar si el valor externo realmente cambió y no fue un cambio interno
+            // Only update if external value actually changed and wasn't an internal change
             if (valueStr !== previousTemplateRef.current && !isInternalUpdateRef.current) {
                 setTemplate(value);
                 previousTemplateRef.current = valueStr;
@@ -108,7 +108,7 @@ export function EmailBuilder({ value, onChange, onUploadImage, previewMode = fal
     // Sync internal store changes to external onChange
     useEffect(() => {
         const templateStr = JSON.stringify(template);
-        // Solo llamar onChange si el template realmente cambió
+        // Only call onChange if template actually changed
         if (templateStr !== previousTemplateRef.current) {
             isInternalUpdateRef.current = true;
             previousTemplateRef.current = templateStr;
@@ -117,7 +117,7 @@ export function EmailBuilder({ value, onChange, onUploadImage, previewMode = fal
     }, [template, onChange]);
 
     const [activeId, setActiveId] = useState<string | null>(null);
-    const [mounted] = useState(true); // Inicializar directamente, no hay SSR issues aquí
+    const [mounted] = useState(true); // Initialize directly, no SSR issues here
 
     const sensors = useSensors(
         useSensor(PointerSensor, {
@@ -327,7 +327,7 @@ export function EmailBuilder({ value, onChange, onUploadImage, previewMode = fal
                     {/* Separador visual - Espacio físico independiente del Canvas */}
                     {!previewMode && <div className="w-2 flex-shrink-0" />}
 
-                    {/* Center Canvas - Se ajusta automáticamente, scrollbar completamente separado */}
+                    {/* Center Canvas - Adjusts automatically, scrollbar completely separated */}
                     <div className="flex-1 overflow-y-auto bg-slate-100 p-8 min-w-0 canvas-scroll-container">
                         <div className="max-w-4xl mx-auto">
                             <Canvas template={template} />

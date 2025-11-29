@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { EmailBlock } from '../types';
 
 interface HeaderBlockProps {
@@ -10,6 +10,17 @@ function isValidUrl(url: string): boolean {
     try {
         const urlObj = new URL(url, window.location.href);
         return urlObj.protocol === 'http:' || urlObj.protocol === 'https:' || urlObj.protocol === 'mailto:';
+    } catch {
+        return false;
+    }
+}
+
+// Validate image URL
+function isValidImageUrl(url: string): boolean {
+    if (!url || url.trim() === '') return false;
+    try {
+        const urlObj = new URL(url, window.location.href);
+        return urlObj.protocol === 'http:' || urlObj.protocol === 'https:' || urlObj.protocol === 'data:';
     } catch {
         return false;
     }
@@ -41,6 +52,14 @@ export function HeaderBlock({ block }: HeaderBlockProps) {
         align?: 'left' | 'center' | 'right';
     };
 
+    const [logoError, setLogoError] = useState(false);
+    const hasValidLogo = logoUrl && isValidImageUrl(logoUrl);
+    const showLogoPlaceholder = !hasValidLogo || logoError;
+
+    const handleLogoError = () => {
+        setLogoError(true);
+    };
+
     return (
         <div style={{
             backgroundColor,
@@ -52,11 +71,32 @@ export function HeaderBlock({ block }: HeaderBlockProps) {
             flexWrap: 'wrap'
         }}>
             {/* Logo */}
-            {logoUrl && (
+            {showLogoPlaceholder ? (
+                <div
+                    style={{
+                        width: logoWidth,
+                        height: logoHeight === 'auto' ? '60px' : logoHeight,
+                        minHeight: '60px',
+                        backgroundColor: '#f3f4f6',
+                        border: '2px dashed #d1d5db',
+                        borderRadius: '4px',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#9ca3af',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        fontFamily: 'Arial, sans-serif'
+                    }}
+                >
+                    Logo
+                </div>
+            ) : (
                 <div>
                     <img
                         src={logoUrl}
                         alt={logoAlt}
+                        onError={handleLogoError}
                         style={{
                             width: logoWidth,
                             height: logoHeight === 'auto' ? 'auto' : logoHeight,

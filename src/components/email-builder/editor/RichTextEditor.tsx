@@ -34,7 +34,7 @@ interface RichTextEditorProps {
     placeholder?: string;
 }
 
-export function RichTextEditor({ content, onChange, placeholder = 'Escribe aquí...' }: RichTextEditorProps) {
+export function RichTextEditor({ content, onChange, placeholder = 'Type here...' }: RichTextEditorProps) {
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {

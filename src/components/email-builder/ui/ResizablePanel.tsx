@@ -12,7 +12,7 @@ interface ResizablePanelProps {
     storageKey?: string;
     onResize?: (width: number) => void;
     className?: string;
-    handleSide?: 'left' | 'right'; // Lado donde está el handle (default: 'right')
+    handleSide?: 'left' | 'right'; // Side where the handle is located (default: 'right')
 }
 
 export function ResizablePanel({ 
@@ -45,7 +45,7 @@ export function ResizablePanel({
 
     const handleMouseDown = useCallback((e: React.MouseEvent) => {
         e.preventDefault();
-        e.stopPropagation(); // Detener propagación para evitar conflictos con DndContext
+        e.stopPropagation(); // Stop propagation to avoid conflicts with DndContext
         setIsResizing(true);
         startXRef.current = e.clientX;
         startWidthRef.current = width;
@@ -57,8 +57,8 @@ export function ResizablePanel({
         if (!isResizing) return;
 
         const deltaX = e.clientX - startXRef.current;
-        // Si el handle está a la izquierda, invertir el deltaX
-        // (arrastrar hacia la izquierda debe expandir el sidebar)
+        // If handle is on the left, invert deltaX
+        // (dragging left should expand the sidebar)
         const adjustedDeltaX = handleSide === 'left' ? -deltaX : deltaX;
         const newWidth = Math.max(minWidth, Math.min(maxWidth, startWidthRef.current + adjustedDeltaX));
         
@@ -100,7 +100,7 @@ export function ResizablePanel({
             style={{ width: `${width}px`, minWidth: `${minWidth}px`, maxWidth: `${maxWidth}px` }}
         >
             {children}
-            {/* Resize Handle - Posicionado en el espacio entre paneles con z-index muy alto */}
+            {/* Resize Handle - Positioned in the space between panels with very high z-index */}
             <div
                 onMouseDown={handleMouseDown}
                 className={cn(
@@ -109,16 +109,16 @@ export function ResizablePanel({
                     isResizing && 'bg-blue-500/20'
                 )}
                 style={{
-                    [handleSide === 'right' ? 'right' : 'left']: '-12px', // Más espacio para capturar eventos
-                    width: '24px', // Área más grande para capturar fácilmente
+                    [handleSide === 'right' ? 'right' : 'left']: '-12px', // More space to capture events
+                    width: '24px', // Larger area for easy capture
                     touchAction: 'none',
-                    zIndex: 100, // Muy alto para estar por encima de todo
-                    pointerEvents: 'auto', // Asegurar que capture eventos
+                    zIndex: 100, // Very high to be above everything
+                    pointerEvents: 'auto', // Ensure it captures events
                     userSelect: 'none', // Prevent text selection during drag
                 }}
                 title="Drag to resize"
             >
-                {/* Línea visual central */}
+                {/* Central visual line */}
                 <div 
                     className={cn(
                         'absolute top-0 left-1/2 -translate-x-1/2 w-0.5 h-full transition-colors',
@@ -127,7 +127,7 @@ export function ResizablePanel({
                     )}
                 />
                 
-                {/* Icono de resize - visible solo en hover */}
+                {/* Resize icon - visible only on hover */}
                 <div 
                     className={cn(
                         'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity',
