@@ -30,8 +30,13 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# local env files
 .env*
+.env*.local
+
+# Internal Documentation (Not for public repo)
+# memory-bank/
+# .clinerules
 
 # vercel
 .vercel

@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kairos Email Builder
 
-## Getting Started
+A lightweight, native React email builder component designed for Next.js applications. Built with **Tailwind CSS**, **Shadcn UI**, and **dnd-kit**.
 
-First, run the development server:
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-Strict-blue)
+![Next.js](https://img.shields.io/badge/Next.js-15-black)
+
+## 🚀 Features
+
+*   **Drag & Drop Interface:** Smooth, intuitive drag-and-drop experience powered by `@dnd-kit`.
+*   **Lightweight & Native:** No heavy external dependencies like GrapesJS or iframe wrappers.
+*   **Modern Stack:** Built for the modern React ecosystem (Next.js 15, React 19, Tailwind v4).
+*   **Customizable Blocks:** Includes core blocks like Text, Image, Button, Columns, Divider, and Spacer.
+*   **Email-Ready Output:** Exports to clean, table-based HTML compatible with major email clients (Outlook, Gmail, etc.).
+*   **JSON State:** Saves templates as structured JSON for easy persistence and re-editing.
+
+## 📦 Installation
 
 ```bash
-npm run dev
+npm install kairos-email-builder
 # or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+yarn add kairos-email-builder
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+*(Note: Package publication pending. Currently, clone and import the component directly.)*
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```tsx
+import { EmailBuilder, type EmailTemplate } from '@/components/email-builder';
+import { useState } from 'react';
 
-## Learn More
+const initialTemplate: EmailTemplate = {
+  version: '1.0',
+  root: {
+    backgroundColor: '#ffffff',
+    fontFamily: 'sans-serif',
+    children: []
+  }
+};
 
-To learn more about Next.js, take a look at the following resources:
+export default function Page() {
+  const [template, setTemplate] = useState<EmailTemplate>(initialTemplate);
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  return (
+    <div className="h-screen">
+      <EmailBuilder 
+        value={template} 
+        onChange={setTemplate}
+        onUploadImage={async (file) => {
+          // Implement your image upload logic here
+          return 'https://example.com/image.jpg';
+        }}
+      />
+    </div>
+  );
+}
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🤝 Contributing
 
-## Deploy on Vercel
+We welcome contributions! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to submit pull requests, report issues, and suggest improvements.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📄 License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🔮 Roadmap
+
+- [ ] Core Drag & Drop Logic
+- [ ] Block Configuration Panels
+- [ ] HTML Export Utility
+- [ ] Mobile Preview Mode
+- [ ] Dark Mode Support
