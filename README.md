@@ -10,10 +10,16 @@ A lightweight, native React email builder component designed for Next.js applica
 
 *   **Drag & Drop Interface:** Smooth, intuitive drag-and-drop experience powered by `@dnd-kit`.
 *   **Lightweight & Native:** No heavy external dependencies like GrapesJS or iframe wrappers.
-*   **Modern Stack:** Built for the modern React ecosystem (Next.js 15, React 19, Tailwind v4).
-*   **Customizable Blocks:** Includes core blocks like Text, Image, Button, Columns, Divider, and Spacer.
+*   **Modern Stack:** Built for the modern React ecosystem (Next.js 15, React 19, Tailwind CSS v3, Shadcn UI).
+*   **Rich Text Editor:** Full-featured WYSIWYG editor with formatting options (bold, italic, headings, lists, colors, links).
+*   **Professional Blocks:** 
+    - **Core Blocks:** Text, Image, Button, Columns, Divider, Spacer
+    - **Professional Blocks:** Header (with logo and navigation), Footer (with company info and legal links), Social Links (Facebook, X/Twitter, Instagram, LinkedIn, YouTube)
+*   **Template System:** Predefined templates (Transactional, Welcome, Newsletter, Support) and custom template saving.
+*   **Resizable Panels:** Dynamic sidebar resizing with persistent width preferences.
 *   **Email-Ready Output:** Exports to clean, table-based HTML compatible with major email clients (Outlook, Gmail, etc.).
 *   **JSON State:** Saves templates as structured JSON for easy persistence and re-editing.
+*   **Nested Blocks:** Full support for nested block structures (e.g., columns containing other blocks).
 
 ## 📦 Installation
 
