@@ -37,8 +37,7 @@ yarn-error.log*
 # Internal Documentation (Not for public repo)
 memory-bank/
 .clinerules
-# implementation_plan.md
-# task.md
+internal/
 walkthrough.md
 
 # vercel
