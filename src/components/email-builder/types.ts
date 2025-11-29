@@ -3,6 +3,7 @@ export type BlockType = 'text' | 'image' | 'button' | 'columns' | 'divider' | 's
 export interface EmailBlock {
   id: string;
   type: BlockType;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   props: Record<string, any>;
   children?: EmailBlock[]; // Para columnas o contenedores
 }

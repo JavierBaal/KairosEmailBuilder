@@ -3,23 +3,31 @@
 **Fecha:** 29 de Noviembre de 2025
 
 ## 🎯 Resumen
-El proyecto ha sido reconfigurado para ser **Open Source**. Se han establecido reglas estrictas de idioma (Inglés para código/docs públicos) y se han añadido los archivos estándar de comunidad (`CONTRIBUTING`, `LICENSE`, `CODE_OF_CONDUCT`). La documentación interna (`memory-bank`) permanece privada y en español.
+El proyecto ha alcanzado un estado de **MVP Funcional (Single Column)**. El editor permite crear emails completos apilando bloques verticalmente, editando sus propiedades y exportando el resultado a HTML. La base técnica es sólida (Next.js 15, Zustand, Dnd-kit) y está lista para la siguiente fase de complejidad.
 
 ## 🚧 Tareas en Curso
-*   Implementación de la lógica de Drag-and-Drop en el Canvas.
-*   Implementación de los bloques visuales (Texto, Imagen, Botón).
+*   **Columnas (Layout):** Es la única pieza funcional mayor pendiente para considerar el builder "completo".
 
 ## ✅ Tareas Completadas
-*   **Open Source Setup:**
-    *   Actualización de `.clinerules` con directivas de idioma estrictas.
-    *   Creación de `README.md` (Inglés).
-    *   Creación de `LICENSE` (MIT), `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`.
-*   **Inicialización:** Proyecto Next.js + Tailwind + Shadcn UI listo.
+*   **Core:** Drag & Drop, Sorting, State Management.
+*   **Bloques:** Texto, Imagen, Botón, Divisor, Espaciador.
+*   **UI:** Panel de propiedades dinámico, Sidebar de bloques, Canvas interactivo.
+*   **Export:** HTML (tablas) y JSON.
 
 ## 🛑 Bloqueos y Riesgos
-*   **Riesgo:** Asegurar que ningún comentario en español se cuele en el código fuente durante el desarrollo.
+*   **Complejidad de Columnas:** Implementar columnas requiere que un bloque pueda contener otros bloques (`children`). Esto implica:
+    1.  Actualizar el esquema de datos (ya soportado en `types.ts` con `children[]`).
+    2.  Modificar `BlockRenderer` para que sea recursivo.
+    3.  Gestionar zonas de caída anidadas con `dnd-kit` (evitar conflictos de eventos entre el contenedor padre y los hijos).
+*   **Linting:** Persisten algunos errores de linting (importaciones, tipos `any` controlados) que no afectan el build pero deben limpiarse.
 
-## 📋 Próximos Pasos Inmediatos
-1.  Implementar el `DndContext` (en inglés).
-2.  Definir el estado global del editor.
-3.  Desarrollar el renderizado de bloques.
+## 📋 Contexto para Próxima Sesión (Onboarding)
+*   **Prioridad P0:** Implementar el bloque de **Columnas**.
+*   **Estrategia Sugerida:**
+    1.  Crear `ColumnsBlock.tsx` que renderice sus `children` usando el mismo `SortableContext` que el Canvas principal.
+    2.  Asegurar que `useEditorStore` maneje inserciones en arrays anidados (actualmente `addBlock` solo añade al root, necesita lógica recursiva o path-based).
+    3.  Probar intensivamente el drag & drop anidado.
+*   **Archivos Clave:**
+    *   `src/components/email-builder/store/editor-store.ts`: Aquí está la lógica de estado. Necesita actualización para soportar anidamiento.
+    *   `src/components/email-builder/canvas/BlockRenderer.tsx`: El renderizador principal.
+    *   `src/components/email-builder/EmailBuilder.tsx`: Orquestador del DndContext.
