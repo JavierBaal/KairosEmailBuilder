@@ -76,7 +76,22 @@
 *   ✅ **Validaciones:** Validación de nombres duplicados, plantillas vacías y manejo de errores.
 *   ✅ **UX Completa:** Botones "New Blank Template", "Save Current Template", confirmaciones de eliminación, estados de carga.
 
+### 30 de Noviembre de 2025 (Sesión Bloques Profesionales P1)
+*   ✅ **Social Links Block:** Implementado bloque completo con iconos SVG inline para Facebook, X (Twitter), Instagram, LinkedIn, YouTube y custom.
+*   ✅ **Footer Block:** Implementado bloque de footer con información de empresa, copyright, y links legales configurables.
+*   ✅ **Header Block:** Implementado bloque de header con logo y menú de navegación opcional.
+*   ✅ **Tipos TypeScript:** Interfaces `SocialLinksBlockProps`, `FooterBlockProps`, `HeaderBlockProps` agregadas a `types.ts`.
+*   ✅ **Componentes de Renderizado:** `SocialLinksBlock.tsx`, `FooterBlock.tsx`, `HeaderBlock.tsx` creados con validación de URLs.
+*   ✅ **Paneles de Propiedades:** `SocialLinksProperties.tsx`, `FooterProperties.tsx`, `HeaderProperties.tsx` con controles específicos.
+*   ✅ **Gestión de Links:** Sistema de agregar/eliminar links en Social Links y items de menú en Header.
+*   ✅ **Generación HTML:** Funciones `renderSocialLinksBlock`, `renderFooterBlock`, `renderHeaderBlock` en `html-generator.ts`.
+*   ✅ **Integración Completa:** Bloques integrados en `BlockRenderer`, `RightSidebar`, `LeftSidebar` y `blocks/index.ts`.
+*   ✅ **Iconos Actualizados:** Icono de Twitter actualizado al nuevo icono de X (Twitter) en todos los lugares.
+*   ✅ **Plantillas Actualizadas:** Todas las plantillas predefinidas actualizadas para usar los nuevos bloques especializados.
+*   ✅ **Validaciones:** Validación de URLs en todos los bloques con enlaces, estados vacíos mejorados.
+
 ## Próximas Tareas (Backlog Inmediato)
-1.  **[P0] Implementación de Columnas:** Infraestructura lista. Solo falta crear `ColumnsBlock.tsx` y `ColumnsProperties.tsx`.
-2.  [ ] Refinamiento de estilos y UI general.
-3.  [ ] Tests E2E básicos.
+1.  [ ] Refinamiento de estilos y UI general.
+2.  [ ] Tests E2E básicos.
+3.  [ ] Bloques adicionales según necesidades específicas (HTML Raw, Video, etc.)
+4.  [ ] Mejoras de UX en el editor (preview mejorado, undo/redo, etc.)

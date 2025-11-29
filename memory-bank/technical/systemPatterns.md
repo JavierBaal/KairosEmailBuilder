@@ -46,7 +46,7 @@ type EmailTemplate = {
 
 type EmailBlock = {
   id: string;
-  type: 'text' | 'image' | 'button' | 'columns' | 'divider' | 'spacer';
+  type: 'text' | 'image' | 'button' | 'columns' | 'divider' | 'spacer' | 'social-links' | 'footer' | 'header';
   props: Record<string, any>; // Propiedades específicas (content, src, styles)
   children?: EmailBlock[]; // Para columnas o contenedores
 }
@@ -149,3 +149,119 @@ interface TemplateStorageCallbacks {
 *   `src/components/email-builder/templates/SaveTemplateModal.tsx`: Modal para guardar plantillas.
 *   `src/components/email-builder/templates/template-storage.ts`: Lógica de persistencia.
 *   `src/components/email-builder/types.ts`: Interfaces `SavedTemplate` y `TemplateStorageCallbacks`.
+
+## Bloques Profesionales (Header, Footer, Social Links)
+
+### Arquitectura
+Los bloques profesionales son bloques especializados que encapsulan funcionalidad común en emails profesionales. Siguen el mismo patrón de arquitectura que los bloques básicos pero con props específicas y lógica de renderizado más compleja.
+
+### Social Links Block
+**Propósito:** Renderizar iconos de redes sociales como enlaces clicables.
+
+**Props:**
+```typescript
+interface SocialLinksBlockProps {
+  links?: Array<{
+    platform: 'facebook' | 'x' | 'instagram' | 'linkedin' | 'youtube' | 'custom';
+    url: string;
+    iconUrl?: string; // Para iconos custom
+  }>;
+  iconSize?: string;
+  iconColor?: string;
+  spacing?: string;
+  align?: 'left' | 'center' | 'right';
+  padding?: string;
+}
+```
+
+**Características:**
+*   Iconos SVG inline para máxima compatibilidad con clientes de email.
+*   Soporte para iconos custom mediante URL.
+*   Validación de URLs antes de renderizar.
+*   Layout horizontal con spacing configurable.
+
+**Archivos:**
+*   `src/components/email-builder/blocks/SocialLinksBlock.tsx`
+*   `src/components/email-builder/properties/SocialLinksProperties.tsx`
+
+### Footer Block
+**Propósito:** Renderizar footer completo con información legal y links de unsubscribe.
+
+**Props:**
+```typescript
+interface FooterBlockProps {
+  companyName?: string;
+  companyAddress?: string;
+  copyrightText?: string;
+  unsubscribeUrl?: string;
+  privacyPolicyUrl?: string;
+  termsUrl?: string;
+  backgroundColor?: string;
+  textColor?: string;
+  fontSize?: string;
+  padding?: string;
+  showUnsubscribe?: boolean;
+  showPrivacyPolicy?: boolean;
+  showTerms?: boolean;
+}
+```
+
+**Características:**
+*   Información de empresa configurable.
+*   Links legales con switches para mostrar/ocultar.
+*   Validación de URLs.
+*   Layout vertical estructurado.
+
+**Archivos:**
+*   `src/components/email-builder/blocks/FooterBlock.tsx`
+*   `src/components/email-builder/properties/FooterProperties.tsx`
+
+### Header Block
+**Propósito:** Renderizar header con logo y menú de navegación opcional.
+
+**Props:**
+```typescript
+interface HeaderBlockProps {
+  logoUrl?: string;
+  logoAlt?: string;
+  logoWidth?: string;
+  logoHeight?: string;
+  showMenu?: boolean;
+  menuItems?: Array<{
+    label: string;
+    url: string;
+  }>;
+  backgroundColor?: string;
+  padding?: string;
+  align?: 'left' | 'center' | 'right';
+}
+```
+
+**Características:**
+*   Logo configurable con dimensiones.
+*   Menú de navegación opcional con items dinámicos.
+*   Layout flexible según configuración.
+*   Validación de URLs en items de menú.
+
+**Archivos:**
+*   `src/components/email-builder/blocks/HeaderBlock.tsx`
+*   `src/components/email-builder/properties/HeaderProperties.tsx`
+
+### Patrón de Implementación
+Todos los bloques profesionales siguen el mismo patrón:
+
+1. **Componente de Renderizado:** Renderiza el bloque en el canvas con validaciones.
+2. **Componente de Propiedades:** Panel de edición con controles específicos.
+3. **Integración:** Casos en `BlockRenderer`, `RightSidebar`, `LeftSidebar`.
+4. **Generación HTML:** Función específica en `html-generator.ts` usando tablas para compatibilidad.
+
+### Validaciones Comunes
+*   URLs validadas con `isValidUrl()` antes de renderizar.
+*   Estados vacíos mejorados con mensajes informativos.
+*   Valores por defecto para todas las props.
+*   Escape HTML en generación de HTML para seguridad.
+
+### Actualización de Iconos
+*   Icono de Twitter actualizado al nuevo icono de X (Twitter).
+*   Todos los iconos SVG inline para compatibilidad con emails.
+*   Soporte para iconos custom mediante URL.

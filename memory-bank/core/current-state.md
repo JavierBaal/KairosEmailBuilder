@@ -3,16 +3,17 @@
 **Fecha:** 30 de Noviembre de 2025
 
 ## 🎯 Resumen
-El proyecto ha alcanzado un estado de **MVP Funcional Mejorado y Auditado**. El editor permite crear emails completos apilando bloques verticalmente, editando sus propiedades y exportando el resultado a HTML seguro. La base técnica es sólida y **completamente auditada**: todos los problemas críticos, de seguridad y de calidad han sido corregidos. El sistema ahora soporta bloques anidados a nivel de infraestructura, listo para implementar columnas. **UI mejorada**: Sistema de paneles redimensionables implementado con sidebars independientes que ajustan dinámicamente el Canvas. **Sistema de Plantillas**: Implementado sistema completo de plantillas predefinidas y personalizadas con selector modal, preview esquemático y callbacks para integración con BD externa.
+El proyecto ha alcanzado un estado de **MVP Funcional Completo con Bloques Profesionales**. El editor permite crear emails completos apilando bloques verticalmente, editando sus propiedades y exportando el resultado a HTML seguro. La base técnica es sólida y **completamente auditada**: todos los problemas críticos, de seguridad y de calidad han sido corregidos. El sistema soporta bloques anidados completamente funcionales (Columnas implementadas). **UI mejorada**: Sistema de paneles redimensionables implementado con sidebars independientes que ajustan dinámicamente el Canvas. **Sistema de Plantillas**: Implementado sistema completo de plantillas predefinidas y personalizadas con selector modal, preview esquemático y callbacks para integración con BD externa. **Bloques Profesionales**: Implementados bloques especializados (Header, Footer, Social Links) que mejoran significativamente la capacidad de crear emails profesionales.
 
 ## 🚧 Tareas en Curso
-*   **Columnas (Layout):** Es la única pieza funcional mayor pendiente. La infraestructura de anidamiento ya está implementada y lista.
+*   **Ninguna crítica:** El sistema está funcionalmente completo para MVP.
 
 ## ✅ Tareas Completadas
 
 ### Funcionalidad Core
 *   **Core:** Drag & Drop, Sorting, State Management completamente funcional.
-*   **Bloques:** Texto, Imagen, Botón, Divisor, Espaciador.
+*   **Bloques Básicos:** Texto, Imagen, Botón, Divisor, Espaciador.
+*   **Bloques Avanzados:** Columnas (Layout), Header, Footer, Social Links.
 *   **UI:** Panel de propiedades dinámico, Sidebar de bloques, Canvas interactivo.
 *   **Export:** HTML (tablas) y JSON.
 
@@ -27,6 +28,7 @@ El proyecto ha alcanzado un estado de **MVP Funcional Mejorado y Auditado**. El 
 
 ### Sistema de Plantillas (30 Nov 2025)
 *   ✅ **Plantillas Predefinidas:** 4 plantillas completas implementadas (Transactional, Welcome, Newsletter, Support).
+*   ✅ **Plantillas Actualizadas:** Todas las plantillas predefinidas ahora usan los nuevos bloques especializados (Header, Footer, Social Links).
 *   ✅ **Selector Modal:** Modal con grid responsive para seleccionar plantillas predefinidas y guardadas.
 *   ✅ **Preview Esquemático:** Componente `TemplatePreview` que muestra estructura visual de plantillas.
 *   ✅ **Guardar Plantillas:** Usuario puede guardar su diseño actual como plantilla personalizada.
@@ -36,6 +38,18 @@ El proyecto ha alcanzado un estado de **MVP Funcional Mejorado y Auditado**. El 
 *   ✅ **Validaciones:** Validación de nombres únicos y plantillas vacías.
 *   ✅ **UI Completa:** Modales, confirmaciones y mensajes de error en inglés (Open Source ready).
 *   ✅ **Integración:** Botón "Templates" en header del EmailBuilder.
+
+### Bloques Profesionales P1 (30 Nov 2025)
+*   ✅ **Social Links Block:** Bloque especializado para iconos de redes sociales con soporte para Facebook, X (Twitter), Instagram, LinkedIn, YouTube y iconos custom.
+*   ✅ **Footer Block:** Bloque completo de footer con información de empresa, copyright, y links legales (Unsubscribe, Privacy Policy, Terms).
+*   ✅ **Header Block:** Bloque de header con logo y menú de navegación opcional configurable.
+*   ✅ **Iconos SVG Inline:** Todos los iconos de redes sociales implementados como SVG inline para máxima compatibilidad con emails.
+*   ✅ **Actualización de Iconos:** Icono de Twitter actualizado al nuevo icono de X (Twitter).
+*   ✅ **Validación de URLs:** Validación completa de URLs en todos los bloques con enlaces.
+*   ✅ **Propiedades Editables:** Paneles de propiedades completos para cada bloque con controles específicos.
+*   ✅ **Generación HTML:** Funciones de renderizado HTML implementadas para todos los bloques nuevos.
+*   ✅ **Integración Completa:** Bloques integrados en BlockRenderer, RightSidebar, LeftSidebar y html-generator.
+*   ✅ **Plantillas Actualizadas:** Todas las plantillas predefinidas actualizadas para usar los nuevos bloques.
 
 ### Auditoría y Correcciones (29 Nov 2025)
 *   ✅ **Seguridad:** Vulnerabilidad XSS corregida con escape HTML completo.
@@ -54,19 +68,19 @@ El proyecto ha alcanzado un estado de **MVP Funcional Mejorado y Auditado**. El 
 *   **Ninguno crítico:** Todos los problemas identificados en la auditoría han sido resueltos.
 
 ## 📋 Contexto para Próxima Sesión (Onboarding)
-*   **Prioridad P0:** Implementar el bloque de **Columnas**.
-*   **Estado de Infraestructura:**
-    *   ✅ `BlockRenderer` ya renderiza bloques anidados recursivamente.
-    *   ✅ `addBlock` y `moveBlock` soportan completamente anidamiento.
-    *   ✅ `html-generator.ts` genera HTML recursivo para bloques anidados.
-    *   ✅ Validaciones y límites de profundidad implementados.
-*   **Estrategia Sugerida:**
-    1.  Crear `ColumnsBlock.tsx` que renderice sus `children` usando `SortableContext` anidado.
-    2.  Implementar `ColumnsProperties.tsx` para configurar número de columnas y distribución.
-    3.  Añadir caso 'columns' en `BlockRenderer` y `html-generator.ts`.
-    4.  Probar intensivamente el drag & drop anidado entre columnas.
+*   **Estado Actual:** MVP funcionalmente completo con todos los bloques básicos y profesionales implementados.
+*   **Bloques Disponibles:**
+    *   ✅ Básicos: Text, Image, Button, Divider, Spacer
+    *   ✅ Layout: Columns (con anidamiento completo)
+    *   ✅ Profesionales: Header, Footer, Social Links
+*   **Sistema de Plantillas:** Completamente funcional con 4 plantillas predefinidas actualizadas.
+*   **Próximas Mejoras Sugeridas:**
+    1.  Bloques adicionales según necesidades específicas (HTML Raw, Video, etc.)
+    2.  Mejoras de UX en el editor (preview mejorado, undo/redo, etc.)
+    3.  Optimizaciones de rendimiento para templates grandes
+    4.  Tests E2E para validar funcionalidad completa
 *   **Archivos Clave:**
-    *   `src/components/email-builder/store/editor-store.ts`: ✅ Ya soporta anidamiento completo.
-    *   `src/components/email-builder/canvas/BlockRenderer.tsx`: ✅ Ya renderiza recursivamente.
-    *   `src/components/email-builder/EmailBuilder.tsx`: ✅ Sincronización corregida.
-    *   `src/utils/html-generator.ts`: ✅ Generación recursiva implementada.
+    *   `src/components/email-builder/blocks/`: Todos los bloques implementados
+    *   `src/components/email-builder/properties/`: Paneles de propiedades
+    *   `src/components/email-builder/templates/`: Sistema de plantillas
+    *   `src/utils/html-generator.ts`: Generación HTML completa

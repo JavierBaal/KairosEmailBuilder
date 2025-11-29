@@ -1,4 +1,4 @@
-export type BlockType = 'text' | 'image' | 'button' | 'columns' | 'divider' | 'spacer';
+export type BlockType = 'text' | 'image' | 'button' | 'columns' | 'divider' | 'spacer' | 'social-links' | 'footer' | 'header';
 
 export interface EmailBlock {
   id: string;
@@ -22,6 +22,50 @@ export interface ColumnsBlockProps {
   gap?: string;
   padding?: string;
   backgroundColor?: string;
+}
+
+export interface SocialLinksBlockProps {
+  links?: Array<{
+    platform: 'facebook' | 'x' | 'instagram' | 'linkedin' | 'youtube' | 'custom';
+    url: string;
+    iconUrl?: string; // For custom icons
+  }>;
+  iconSize?: string; // e.g., '24px', '32px'
+  iconColor?: string; // Icon color
+  spacing?: string; // Space between icons
+  align?: 'left' | 'center' | 'right';
+  padding?: string;
+}
+
+export interface FooterBlockProps {
+  companyName?: string;
+  companyAddress?: string;
+  copyrightText?: string;
+  unsubscribeUrl?: string;
+  privacyPolicyUrl?: string;
+  termsUrl?: string;
+  backgroundColor?: string;
+  textColor?: string;
+  fontSize?: string;
+  padding?: string;
+  showUnsubscribe?: boolean;
+  showPrivacyPolicy?: boolean;
+  showTerms?: boolean;
+}
+
+export interface HeaderBlockProps {
+  logoUrl?: string;
+  logoAlt?: string;
+  logoWidth?: string;
+  logoHeight?: string;
+  showMenu?: boolean;
+  menuItems?: Array<{
+    label: string;
+    url: string;
+  }>;
+  backgroundColor?: string;
+  padding?: string;
+  align?: 'left' | 'center' | 'right';
 }
 
 export interface SavedTemplate {

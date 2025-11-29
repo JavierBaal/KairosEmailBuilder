@@ -14,13 +14,16 @@ export const transactionalTemplate: EmailTemplate = {
         children: [
             {
                 id: generateId('header'),
-                type: 'image',
+                type: 'header',
                 props: {
-                    src: 'https://via.placeholder.com/600x80?text=Logo',
-                    alt: 'Company Logo',
-                    width: '200px',
-                    align: 'center',
-                    padding: '20px'
+                    logoUrl: 'https://via.placeholder.com/200x60?text=Logo',
+                    logoAlt: 'Company Logo',
+                    logoWidth: '200px',
+                    logoHeight: 'auto',
+                    showMenu: false,
+                    backgroundColor: '#ffffff',
+                    padding: '20px',
+                    align: 'center'
                 }
             },
             {
@@ -60,19 +63,27 @@ export const transactionalTemplate: EmailTemplate = {
                 type: 'divider',
                 props: {
                     color: '#e0e0e0',
-                    thickness: '1px',
+                    height: '1px',
                     padding: '20px'
                 }
             },
             {
-                id: generateId('footer-text'),
-                type: 'text',
+                id: generateId('footer'),
+                type: 'footer',
                 props: {
-                    text: '<p style="font-size: 12px; color: #666666; text-align: center;">This is a transactional email. If you have any questions, please contact us.</p>',
-                    align: 'center',
-                    color: '#666666',
+                    companyName: 'Your Company',
+                    companyAddress: '123 Main St, City, State 12345',
+                    copyrightText: '© 2025 Your Company. All rights reserved.',
+                    unsubscribeUrl: '#',
+                    privacyPolicyUrl: '#',
+                    termsUrl: '#',
+                    backgroundColor: '#f5f5f5',
+                    textColor: '#666666',
                     fontSize: '12px',
-                    padding: '20px'
+                    padding: '20px',
+                    showUnsubscribe: true,
+                    showPrivacyPolicy: true,
+                    showTerms: true
                 }
             }
         ]
@@ -88,13 +99,16 @@ export const welcomeTemplate: EmailTemplate = {
         children: [
             {
                 id: generateId('header'),
-                type: 'image',
+                type: 'header',
                 props: {
-                    src: 'https://via.placeholder.com/600x100?text=Welcome',
-                    alt: 'Welcome Header',
-                    width: '100%',
-                    align: 'center',
-                    padding: '30px 20px'
+                    logoUrl: 'https://via.placeholder.com/300x80?text=Welcome',
+                    logoAlt: 'Welcome Header',
+                    logoWidth: '300px',
+                    logoHeight: 'auto',
+                    showMenu: false,
+                    backgroundColor: '#ffffff',
+                    padding: '30px 20px',
+                    align: 'center'
                 }
             },
             {
@@ -137,14 +151,20 @@ export const welcomeTemplate: EmailTemplate = {
                 }
             },
             {
-                id: generateId('social-text'),
-                type: 'text',
+                id: generateId('social-links'),
+                type: 'social-links',
                 props: {
-                    text: '<p style="font-size: 14px; color: #666666; text-align: center; margin-bottom: 16px;">Follow us on social media:</p>',
+                    links: [
+                        { platform: 'facebook', url: 'https://facebook.com/yourcompany' },
+                        { platform: 'x', url: 'https://x.com/yourcompany' },
+                        { platform: 'instagram', url: 'https://instagram.com/yourcompany' },
+                        { platform: 'linkedin', url: 'https://linkedin.com/company/yourcompany' }
+                    ],
+                    iconSize: '32px',
+                    iconColor: '#666666',
+                    spacing: '16px',
                     align: 'center',
-                    color: '#666666',
-                    fontSize: '14px',
-                    padding: '10px 20px'
+                    padding: '20px'
                 }
             },
             {
@@ -152,19 +172,26 @@ export const welcomeTemplate: EmailTemplate = {
                 type: 'divider',
                 props: {
                     color: '#e0e0e0',
-                    thickness: '1px',
+                    height: '1px',
                     padding: '20px'
                 }
             },
             {
                 id: generateId('footer'),
-                type: 'text',
+                type: 'footer',
                 props: {
-                    text: '<p style="font-size: 12px; color: #999999; text-align: center;">© 2025 Your Company. All rights reserved.</p><p style="font-size: 12px; color: #999999; text-align: center; margin-top: 8px;"><a href="#" style="color: #999999;">Unsubscribe</a> | <a href="#" style="color: #999999;">Privacy Policy</a></p>',
-                    align: 'center',
-                    color: '#999999',
+                    companyName: 'Your Company',
+                    copyrightText: '© 2025 Your Company. All rights reserved.',
+                    unsubscribeUrl: '#',
+                    privacyPolicyUrl: '#',
+                    termsUrl: '#',
+                    backgroundColor: '#ffffff',
+                    textColor: '#999999',
                     fontSize: '12px',
-                    padding: '20px'
+                    padding: '20px',
+                    showUnsubscribe: true,
+                    showPrivacyPolicy: true,
+                    showTerms: false
                 }
             }
         ]
@@ -180,22 +207,21 @@ export const newsletterTemplate: EmailTemplate = {
         children: [
             {
                 id: generateId('header'),
-                type: 'image',
+                type: 'header',
                 props: {
-                    src: 'https://via.placeholder.com/600x80?text=Newsletter+Header',
-                    alt: 'Newsletter Header',
-                    width: '100%',
-                    align: 'center',
-                    padding: '20px'
-                }
-            },
-            {
-                id: generateId('menu-text'),
-                type: 'text',
-                props: {
-                    text: '<div style="text-align: center; padding: 10px 0; border-bottom: 1px solid #e0e0e0;"><a href="#" style="margin: 0 15px; color: #333; text-decoration: none; font-size: 14px;">Home</a><a href="#" style="margin: 0 15px; color: #333; text-decoration: none; font-size: 14px;">Products</a><a href="#" style="margin: 0 15px; color: #333; text-decoration: none; font-size: 14px;">Contact</a></div>',
-                    align: 'center',
-                    padding: '0'
+                    logoUrl: 'https://via.placeholder.com/200x60?text=Newsletter',
+                    logoAlt: 'Newsletter Header',
+                    logoWidth: '200px',
+                    logoHeight: 'auto',
+                    showMenu: true,
+                    menuItems: [
+                        { label: 'Home', url: 'https://example.com' },
+                        { label: 'Products', url: 'https://example.com/products' },
+                        { label: 'Contact', url: 'https://example.com/contact' }
+                    ],
+                    backgroundColor: '#ffffff',
+                    padding: '20px',
+                    align: 'left'
                 }
             },
             {
@@ -276,23 +302,49 @@ export const newsletterTemplate: EmailTemplate = {
                 }
             },
             {
+                id: generateId('social-links'),
+                type: 'social-links',
+                props: {
+                    links: [
+                        { platform: 'facebook', url: 'https://facebook.com/yourcompany' },
+                        { platform: 'x', url: 'https://x.com/yourcompany' },
+                        { platform: 'instagram', url: 'https://instagram.com/yourcompany' },
+                        { platform: 'linkedin', url: 'https://linkedin.com/company/yourcompany' },
+                        { platform: 'youtube', url: 'https://youtube.com/yourcompany' }
+                    ],
+                    iconSize: '28px',
+                    iconColor: '#666666',
+                    spacing: '12px',
+                    align: 'center',
+                    padding: '20px'
+                }
+            },
+            {
                 id: generateId('divider'),
                 type: 'divider',
                 props: {
                     color: '#e0e0e0',
-                    thickness: '1px',
+                    height: '1px',
                     padding: '20px'
                 }
             },
             {
                 id: generateId('footer'),
-                type: 'text',
+                type: 'footer',
                 props: {
-                    text: '<p style="font-size: 12px; color: #999999; text-align: center;">© 2025 Your Company. All rights reserved.</p><p style="font-size: 12px; color: #999999; text-align: center; margin-top: 8px;"><a href="#" style="color: #999999;">Unsubscribe</a> | <a href="#" style="color: #999999;">View in browser</a></p>',
-                    align: 'center',
-                    color: '#999999',
+                    companyName: 'Your Company',
+                    companyAddress: '123 Main St, City, State 12345',
+                    copyrightText: '© 2025 Your Company. All rights reserved.',
+                    unsubscribeUrl: '#',
+                    privacyPolicyUrl: '#',
+                    termsUrl: '#',
+                    backgroundColor: '#f5f5f5',
+                    textColor: '#999999',
                     fontSize: '12px',
-                    padding: '20px'
+                    padding: '20px',
+                    showUnsubscribe: true,
+                    showPrivacyPolicy: true,
+                    showTerms: true
                 }
             }
         ]
@@ -308,13 +360,16 @@ export const supportTemplate: EmailTemplate = {
         children: [
             {
                 id: generateId('header'),
-                type: 'image',
+                type: 'header',
                 props: {
-                    src: 'https://via.placeholder.com/600x60?text=Support',
-                    alt: 'Support Header',
-                    width: '150px',
-                    align: 'center',
-                    padding: '20px'
+                    logoUrl: 'https://via.placeholder.com/150x50?text=Support',
+                    logoAlt: 'Support Header',
+                    logoWidth: '150px',
+                    logoHeight: 'auto',
+                    showMenu: false,
+                    backgroundColor: '#ffffff',
+                    padding: '20px',
+                    align: 'center'
                 }
             },
             {
@@ -381,19 +436,27 @@ export const supportTemplate: EmailTemplate = {
                 type: 'divider',
                 props: {
                     color: '#e0e0e0',
-                    thickness: '1px',
+                    height: '1px',
                     padding: '20px'
                 }
             },
             {
                 id: generateId('footer'),
-                type: 'text',
+                type: 'footer',
                 props: {
-                    text: '<p style="font-size: 12px; color: #999999; text-align: center;">© 2025 Your Company. All rights reserved.</p>',
-                    align: 'center',
-                    color: '#999999',
+                    companyName: 'Your Company',
+                    companyAddress: '123 Main St, City, State 12345',
+                    copyrightText: '© 2025 Your Company. All rights reserved.',
+                    unsubscribeUrl: '#',
+                    privacyPolicyUrl: '#',
+                    termsUrl: '#',
+                    backgroundColor: '#f5f5f5',
+                    textColor: '#999999',
                     fontSize: '12px',
-                    padding: '20px'
+                    padding: '20px',
+                    showUnsubscribe: false,
+                    showPrivacyPolicy: true,
+                    showTerms: true
                 }
             }
         ]

@@ -7,6 +7,9 @@ import { ButtonProperties } from '../properties/ButtonProperties';
 import { DividerProperties } from '../properties/DividerProperties';
 import { SpacerProperties } from '../properties/SpacerProperties';
 import { ColumnsProperties } from '../properties/ColumnsProperties';
+import { SocialLinksProperties } from '../properties/SocialLinksProperties';
+import { FooterProperties } from '../properties/FooterProperties';
+import { HeaderProperties } from '../properties/HeaderProperties';
 import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
 
@@ -107,8 +110,17 @@ export function RightSidebar() {
                 {selectedBlock.type === 'columns' && (
                     <ColumnsProperties props={selectedBlock.props} onChange={handleUpdate} blockId={selectedBlock.id} />
                 )}
+                {selectedBlock.type === 'social-links' && (
+                    <SocialLinksProperties props={selectedBlock.props} onChange={handleUpdate} />
+                )}
+                {selectedBlock.type === 'footer' && (
+                    <FooterProperties props={selectedBlock.props} onChange={handleUpdate} />
+                )}
+                {selectedBlock.type === 'header' && (
+                    <HeaderProperties props={selectedBlock.props} onChange={handleUpdate} />
+                )}
                 {/* Fallback for other types */}
-                {!['text', 'image', 'button', 'divider', 'spacer', 'columns'].includes(selectedBlock.type) && (
+                {!['text', 'image', 'button', 'divider', 'spacer', 'columns', 'social-links', 'footer', 'header'].includes(selectedBlock.type) && (
                     <div className="text-sm text-muted-foreground">
                         No properties available for this block type yet.
                     </div>

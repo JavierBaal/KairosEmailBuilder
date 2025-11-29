@@ -5,3 +5,6 @@ export * from './ButtonBlock';
 export * from './ColumnsBlock';
 export * from './DividerBlock';
 export * from './SpacerBlock';
+export * from './SocialLinksBlock';
+export * from './FooterBlock';
+export * from './HeaderBlock';

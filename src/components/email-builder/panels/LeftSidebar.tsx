@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDraggable } from '@dnd-kit/core';
 import { BlockType } from '../types';
-import { Type, Image as ImageIcon, Square, Columns, Minus, MoveVertical } from 'lucide-react';
+import { Type, Image as ImageIcon, Square, Columns, Minus, MoveVertical, Share2, FileText, Layout } from 'lucide-react';
 
 interface DraggableBlockProps {
     type: BlockType;
@@ -51,6 +51,9 @@ export function LeftSidebar() {
                 <DraggableBlock type="columns" label="Columns" icon={<Columns size={20} />} />
                 <DraggableBlock type="divider" label="Divider" icon={<Minus size={20} />} />
                 <DraggableBlock type="spacer" label="Spacer" icon={<MoveVertical size={20} />} />
+                <DraggableBlock type="social-links" label="Social Links" icon={<Share2 size={20} />} />
+                <DraggableBlock type="footer" label="Footer" icon={<FileText size={20} />} />
+                <DraggableBlock type="header" label="Header" icon={<Layout size={20} />} />
             </div>
         </div>
     );

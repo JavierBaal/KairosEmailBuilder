@@ -8,6 +8,9 @@ import { ButtonBlock } from '../blocks/ButtonBlock';
 import { DividerBlock } from '../blocks/DividerBlock';
 import { SpacerBlock } from '../blocks/SpacerBlock';
 import { ColumnsBlock } from '../blocks/ColumnsBlock';
+import { SocialLinksBlock } from '../blocks/SocialLinksBlock';
+import { FooterBlock } from '../blocks/FooterBlock';
+import { HeaderBlock } from '../blocks/HeaderBlock';
 
 interface BlockRendererProps {
     block: EmailBlock;
@@ -36,6 +39,12 @@ export function BlockRenderer({ block }: BlockRendererProps) {
                 return <DividerBlock block={block} />;
             case 'spacer':
                 return <SpacerBlock block={block} />;
+            case 'social-links':
+                return <SocialLinksBlock block={block} />;
+            case 'footer':
+                return <FooterBlock block={block} />;
+            case 'header':
+                return <HeaderBlock block={block} />;
             default:
                 return <div className="p-4 bg-gray-100 text-center text-gray-500">Unknown block type: {block.type}</div>;
         }
