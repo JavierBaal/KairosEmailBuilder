@@ -58,6 +58,11 @@ export default function Page() {
 }
 ```
 
+## 📚 Documentation
+
+- **[Developer Documentation](docs/DEVELOPER_DOCUMENTATION.md)**: Complete technical documentation, API reference, and implementation tutorial for developers
+- **[User Manual](docs/USER_MANUAL.md)**: Step-by-step guide for non-technical users on how to use the email builder
+
 ## 🤝 Contributing
 
 We welcome contributions! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to submit pull requests, report issues, and suggest improvements.
@@ -68,8 +73,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🔮 Roadmap
 
-- [ ] Core Drag & Drop Logic
-- [ ] Block Configuration Panels
-- [ ] HTML Export Utility
+- [x] Core Drag & Drop Logic
+- [x] Block Configuration Panels
+- [x] HTML Export Utility
+- [x] Professional Blocks (Header, Footer, Social Links)
+- [x] Template System
 - [ ] Mobile Preview Mode
 - [ ] Dark Mode Support
