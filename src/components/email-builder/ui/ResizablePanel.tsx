@@ -114,9 +114,9 @@ export function ResizablePanel({
                     touchAction: 'none',
                     zIndex: 100, // Muy alto para estar por encima de todo
                     pointerEvents: 'auto', // Asegurar que capture eventos
-                    userSelect: 'none', // Prevenir selección de texto durante el arrastre
+                    userSelect: 'none', // Prevent text selection during drag
                 }}
-                title="Arrastra para redimensionar"
+                title="Drag to resize"
             >
                 {/* Línea visual central */}
                 <div 
