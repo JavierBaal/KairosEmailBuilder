@@ -6,6 +6,9 @@ A lightweight, native React email builder component designed for Next.js applica
 ![TypeScript](https://img.shields.io/badge/TypeScript-Strict-blue)
 ![Next.js](https://img.shields.io/badge/Next.js-15-black)
 
+https://github.com/user-attachments/assets/2ce18ee0-bf8e-466e-9440-432655c83eb7
+
+
 ## 🚀 Features
 
 *   **Drag & Drop Interface:** Smooth, intuitive drag-and-drop experience powered by `@dnd-kit`.
